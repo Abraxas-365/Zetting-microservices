@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	// "github.com/arsmn/fiber-swagger/v2"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"os"
 	"user/pkg/application"
 	"user/pkg/infraestructure/repository"
 	"user/pkg/infraestructure/rest/handlers"
 	"user/pkg/infraestructure/rest/routes"
-
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func main() {

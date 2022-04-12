@@ -6,11 +6,12 @@ services:
  - name: zetting-user
    host: zetting-user
    port: 3000
-   path: /api/users/
+   path: /
    routes:
      - name: zetting-user-service-routes
        paths:
          - /api/users/
+         - /swagger
        methods:
          - POST
          - GET
