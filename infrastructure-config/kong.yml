@@ -1,0 +1,60 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+
+ - name: zetting-user
+   host: zetting-user
+   port: 3000
+   path: /api/users/
+   routes:
+     - name: zetting-user-service-routes
+       paths:
+         - /api/users/
+       methods:
+         - POST
+         - GET
+         - UPDATE
+       strip_path: true
+
+ - name: zetting-project
+   host: zetting-project
+   port: 3001
+   path: /api/projects/
+   routes:
+     - name: zetting-project-service-routes
+       paths:
+         - /api/projects/
+       methods:
+         - POST
+         - GET
+         - UPDATE
+       strip_path: true
+
+ - name: zetting-notification
+   host: zetting-notification
+   port: 3002
+   path: /api/notification/
+   routes:
+     - name: zetting-notification-service-routes
+       paths:
+         - /api/notification/
+       methods:
+         - POST
+         - GET
+         - UPDATE
+       strip_path: true
+
+ - name: zetting-workrequest
+   host: zetting-workrequest
+   port: 3002
+   path: /api/work-request/
+   routes:
+     - name: zetting-workrequest-service-routes
+       paths:
+         - /api/work-request/
+       methods:
+         - POST
+         - GET
+         - UPDATE
+       strip_path: true
