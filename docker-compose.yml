@@ -1,0 +1,64 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - zetting
+
+  zetting-user:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./user/.
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+
+  zetting-project:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./project/.
+    restart: always
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+
+  zetting-notification:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./notification/.
+    restart: always
+    ports:
+      - 3002:3002
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+
+  zetting-workrequest:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./workRequest/.
+    restart: always
+    ports:
+      - 3003:3003
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+networks:
+  zetting:
+    driver: bridge
