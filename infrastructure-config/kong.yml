@@ -21,7 +21,7 @@ services:
  - name: zetting-project
    host: zetting-project
    port: 3001
-   path: /api/projects/
+   path: /
    routes:
      - name: zetting-project-service-routes
        paths:
@@ -35,7 +35,7 @@ services:
  - name: zetting-notification
    host: zetting-notification
    port: 3002
-   path: /api/notification/
+   path: /
    routes:
      - name: zetting-notification-service-routes
        paths:
@@ -49,7 +49,7 @@ services:
  - name: zetting-workrequest
    host: zetting-workrequest
    port: 3002
-   path: /api/work-request/
+   path: /
    routes:
      - name: zetting-workrequest-service-routes
        paths:
