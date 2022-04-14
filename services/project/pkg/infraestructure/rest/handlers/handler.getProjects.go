@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"projects/pkg/internal/auth"
+	"projects/internal/auth"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"

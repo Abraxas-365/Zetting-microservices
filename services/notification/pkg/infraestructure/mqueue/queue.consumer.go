@@ -2,7 +2,9 @@ package mqueue
 
 import (
 	"encoding/json"
+	"fmt"
 	"notifications/pkg/core/models"
+	"os"
 
 	"github.com/streadway/amqp"
 )
@@ -10,6 +12,8 @@ import (
 func (mq *mQueue) ConsumerWorkRequest() error {
 	conn, err := amqp.Dial(mq.uri)
 	if err != nil {
+		fmt.Print(err)
+		os.Exit(1)
 		return ErrCantConnectToRabbit
 	}
 	defer conn.Close()

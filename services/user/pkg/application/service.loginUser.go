@@ -1,8 +1,8 @@
 package service
 
 import (
+	"user/internal/auth"
 	"user/pkg/core/models"
-	"user/pkg/internal/auth"
 )
 
 func (r *userService) LoginUser(email string, password string) (*models.AuthUser, error) {

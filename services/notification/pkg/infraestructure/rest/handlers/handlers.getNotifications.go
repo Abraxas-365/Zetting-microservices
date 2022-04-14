@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"notifications/pkg/internal/auth"
+	"notifications/internal/auth"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"

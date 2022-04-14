@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"work-request/internal/auth"
 	"work-request/pkg/core/models"
-	"work-request/pkg/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )

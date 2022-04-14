@@ -3,7 +3,7 @@ package handlers
 import (
 	"fmt"
 	"strings"
-	"user/pkg/internal/auth"
+	"user/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -1,8 +1,8 @@
 package routes
 
 import (
+	"user/internal/auth"
 	"user/pkg/infraestructure/rest/handlers"
-	"user/pkg/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )

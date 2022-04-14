@@ -24,11 +24,10 @@ func main() {
 	handler := handlers.NewNotificationHandler(service)
 	mq, err := mqueue.NewMQueue(mqUri, mqChannelName, service)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Print(err)
 		os.Exit(1)
 	}
 	go mq.ConsumerWorkRequest()
-
 	app := fiber.New()
 	app.Use(logger.New())
 	routes.NotificationRoute(app, handler) //User routes

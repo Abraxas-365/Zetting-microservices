@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"notifications/internal/auth"
 	"notifications/pkg/core/models"
-	"notifications/pkg/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )

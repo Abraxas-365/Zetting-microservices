@@ -1,8 +1,8 @@
 package routes
 
 import (
+	"notifications/internal/auth"
 	"notifications/pkg/infraestructure/rest/handlers"
-	"notifications/pkg/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )
