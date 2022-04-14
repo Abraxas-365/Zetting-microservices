@@ -6,15 +6,15 @@ import (
 
 type Project struct {
 	ID           interface{} `bson:"_id,omitempty" json:"id"`
-	Name         string      `json:"name"`
-	Description  string      `json:"description"`
-	Owners       interface{} `json:"owners"`
-	Workers      interface{} `json:"workers"`
-	Color        string      `json:"color"`
-	DateStarted  string      `json:"date_started"`
-	DateFinished string      `json:"date_finish"`
-	Created      time.Time   `json:"created_at"`
-	Updated      time.Time   `json:"updated_at,omitempty"`
+	Name         string      `bson:"name" json:"name,omitempty"`
+	Description  string      `bson:"description" json:"description,omitempty"`
+	Owners       interface{} `bson:"owners" json:"owners"`
+	Workers      interface{} `bson:"workers" json:"workers"`
+	Color        string      `bson:"color" json:"color,omitempty"`
+	DateStarted  string      `bson:"date_started" json:"date_started,omitempty"`
+	DateFinished string      `bson:"date_finished" json:"date_finished,omitempty"`
+	Created      time.Time   `bson:"created_at" json:"created_at,omitempty"`
+	Updated      time.Time   `bson:"updated_at" json:"updated_at,omitempty"`
 }
 
 type Projects []*Project

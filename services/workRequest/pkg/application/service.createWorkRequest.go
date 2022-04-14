@@ -1,14 +1,20 @@
 package service
 
-import "work-request/pkg/core/models"
+import (
+	"work-request/pkg/core/models"
+)
 
 func (r *workRequestService) CreateWorkRequest(newWorkRequest models.WorkRequest) (*models.WorkRequest, error) {
-
+	newWorkRequest.Status = "P"
 	WorkRequest, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
 	if err != nil {
 		return nil, err
 	}
-	/*TODO: add adapter to send the id to the rabbitMQ*/
+
+	if err := r.mqpublisher.Publish(newWorkRequest); err != nil {
+		//TODO: si falla eliminar el work request de la base de datos
+		return WorkRequest, err
+	}
 
 	return WorkRequest, nil
 

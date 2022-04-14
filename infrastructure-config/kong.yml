@@ -6,12 +6,11 @@ services:
  - name: zetting-user
    host: zetting-user
    port: 3000
-   path: /
+   path: /api/users
    routes:
      - name: zetting-user-service-routes
        paths:
          - /api/users/
-         - /swagger
        methods:
          - POST
          - GET
@@ -21,7 +20,7 @@ services:
  - name: zetting-project
    host: zetting-project
    port: 3001
-   path: /
+   path: /api/projects
    routes:
      - name: zetting-project-service-routes
        paths:
@@ -35,7 +34,7 @@ services:
  - name: zetting-notification
    host: zetting-notification
    port: 3002
-   path: /
+   path: /api/notification
    routes:
      - name: zetting-notification-service-routes
        paths:
@@ -48,8 +47,8 @@ services:
 
  - name: zetting-workrequest
    host: zetting-workrequest
-   port: 3002
-   path: /
+   port: 3003
+   path: /api/work-request
    routes:
      - name: zetting-workrequest-service-routes
        paths:

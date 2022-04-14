@@ -21,5 +21,6 @@ func (h *notificationHandler) GetNotifications(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
+
 	return c.Status(fiber.StatusOK).JSON(myNotifications)
 }

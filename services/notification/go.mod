@@ -7,6 +7,7 @@ require (
 	github.com/gofiber/jwt/v2 v2.2.7
 	github.com/golang-jwt/jwt/v4 v4.4.1
 	github.com/pkg/errors v0.9.1
+	github.com/streadway/amqp v1.0.0
 	go.mongodb.org/mongo-driver v1.9.0
 	golang.org/x/net v0.0.0-20220412020605-290c469a71a5
 )

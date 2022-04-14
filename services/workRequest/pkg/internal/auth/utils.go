@@ -28,7 +28,7 @@ func ExtractTokenMetadata(c *fiber.Ctx) (*TokenMetadata, error) {
 		email := string(claims["email"].(string))
 		id := string(claims["id"].(string))
 		fmt.Println("el email", email)
-		fmt.Println("el password", email)
+		fmt.Println("el id", id)
 
 		return &TokenMetadata{
 			ID:    id,
