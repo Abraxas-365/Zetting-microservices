@@ -11,7 +11,7 @@ var (
 )
 
 type notificationService struct {
-	notificationRepo ports.NotificationService
+	notificationRepo ports.NotificationRepository
 }
 
 func NewNotificationService(notificationRepo ports.NotificationRepository) ports.NotificationService {

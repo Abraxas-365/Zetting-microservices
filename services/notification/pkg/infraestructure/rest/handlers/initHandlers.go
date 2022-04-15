@@ -7,8 +7,8 @@ import (
 )
 
 type NotificationsHandler interface {
-	CreateNotification(c *fiber.Ctx) error
 	GetNotifications(c *fiber.Ctx) error
+	GetCompleteNotification(c *fiber.Ctx) error
 }
 type notificationHandler struct {
 	notificationService ports.NotificationService

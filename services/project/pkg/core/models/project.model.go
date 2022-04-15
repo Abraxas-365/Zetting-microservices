@@ -7,6 +7,7 @@ import (
 type Project struct {
 	ID           interface{} `bson:"_id,omitempty" json:"id"`
 	Name         string      `bson:"name" json:"name,omitempty"`
+	Image        string      `bson:"image" json:"image,omitempty"`
 	Description  string      `bson:"description" json:"description,omitempty"`
 	Owners       interface{} `bson:"owners" json:"owners"`
 	Workers      interface{} `bson:"workers" json:"workers"`
