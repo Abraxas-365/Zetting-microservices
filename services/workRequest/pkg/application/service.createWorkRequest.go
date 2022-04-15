@@ -11,7 +11,7 @@ func (r *workRequestService) CreateWorkRequest(newWorkRequest models.WorkRequest
 		return nil, err
 	}
 
-	if err := r.mqpublisher.Publish(newWorkRequest); err != nil {
+	if err := r.mqpublisher.Publish(*WorkRequest); err != nil {
 		//TODO: si falla eliminar el work request de la base de datos
 		return WorkRequest, err
 	}

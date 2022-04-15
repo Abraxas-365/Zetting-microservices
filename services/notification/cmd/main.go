@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"notifications/pkg/application"
-	"notifications/pkg/infraestructure/mqueue"
+	"notifications/pkg/infraestructure/mqueue/consumer"
 	"notifications/pkg/infraestructure/repository"
 	"notifications/pkg/infraestructure/rest/handlers"
 	"notifications/pkg/infraestructure/rest/routes"
@@ -22,11 +22,7 @@ func main() {
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Notifications")
 	service := service.NewNotificationService(repo)
 	handler := handlers.NewNotificationHandler(service)
-	mq, err := mqueue.NewMQueue(mqUri, mqChannelName, service)
-	if err != nil {
-		fmt.Print(err)
-		os.Exit(1)
-	}
+	mq, _ := mqconsumer.NewMQueueConsumer(mqUri, mqChannelName, service)
 	go mq.ConsumerWorkRequest()
 	app := fiber.New()
 	app.Use(logger.New())

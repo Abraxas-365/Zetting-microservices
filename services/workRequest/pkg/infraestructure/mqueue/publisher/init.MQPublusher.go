@@ -1,4 +1,4 @@
-package mqueue
+package mqpublisher
 
 import (
 	"errors"
@@ -19,7 +19,7 @@ type mQueue struct {
 	// conn    *amqp.Connection
 }
 
-func NewMQueue(uri string, channelName string) (ports.WorkRequestMQueue, error) {
+func NewMQPublisher(uri string, channelName string) (ports.WorkRequestMQueue, error) {
 	mqueue := &mQueue{
 		channelName: channelName,
 		uri:         uri,

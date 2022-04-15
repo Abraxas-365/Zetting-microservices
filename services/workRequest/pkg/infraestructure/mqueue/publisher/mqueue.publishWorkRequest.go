@@ -1,4 +1,4 @@
-package mqueue
+package mqpublisher
 
 import (
 	"bytes"
@@ -47,7 +47,7 @@ func (mq *mQueue) Publish(workRequest models.WorkRequest) error {
 	notificationSend := notification{
 		NotifiedUserId: workRequest.WorkerId,
 		NotifierUserId: workRequest.OwnerId,
-		ReferenceId:    workRequest.ProjectId,
+		ReferenceId:    workRequest.ID,
 	}
 	json.NewEncoder(workRequestBytes).Encode(notificationSend)
 	err = ch.Publish(

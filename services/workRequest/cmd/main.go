@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"work-request/pkg/application"
-	"work-request/pkg/infraestructure/mqueue"
+	"work-request/pkg/infraestructure/mqueue/publisher"
 	"work-request/pkg/infraestructure/repository"
 	"work-request/pkg/infraestructure/rest/handlers"
 	"work-request/pkg/infraestructure/rest/routes"
@@ -19,7 +19,7 @@ func main() {
 	mqUri := os.Getenv("MQ_URI")
 	mqChannelName := os.Getenv("MQ_CHANNEL_NAME")
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "WorkRequests")
-	mq, _ := mqueue.NewMQueue(mqUri, mqChannelName)
+	mq, _ := mqpublisher.NewMQPublisher(mqUri, mqChannelName)
 	service := service.NewWorkRequestService(repo, mq)
 	handler := handlers.NewWorkRequestHandler(service)
 	app := fiber.New()
