@@ -36,6 +36,7 @@ func (mq *mQueue) ConsumerWorkRequest() error {
 		workRequest := new(models.Notification)
 		json.Unmarshal(msg.Body, workRequest)
 		workRequest.Type = mq.channelName
+		fmt.Println(workRequest)
 		mq.service.CreateNotification(*workRequest)
 	}
 

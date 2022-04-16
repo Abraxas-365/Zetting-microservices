@@ -18,7 +18,7 @@ func ProjectsRoute(app *fiber.App, handler handlers.ProjectHandler) {
 	/*get projects im in*/
 	project.Get("/projects/page=:page", auth.JWTProtected(), handler.GetProjectsWorkingOn)
 	/*ger project by project id*/
-	project.Get("/id=:id", auth.JWTProtected(), handler.GetProjectByProjectId)
+	project.Get("/id=:id", handler.GetProjectByProjectId)
 	/*AddUserToProject*/
 	project.Post("/adduser/type:type", auth.JWTProtected(), handler.AddUserToProject)
 }

@@ -12,17 +12,17 @@ func (r *mongoRepository) AddUserToProject(addUserData models.AddUserToProject, 
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
-	ownerObjectId, err := primitive.ObjectIDFromHex(addUserData.OwnerId.(string))
+	ownerObjectId, err := primitive.ObjectIDFromHex(addUserData.Owner.(string))
 	if err != nil {
 		return err
 	}
 
-	projectObjectId, err := primitive.ObjectIDFromHex(addUserData.ProjectId.(string))
+	projectObjectId, err := primitive.ObjectIDFromHex(addUserData.Project.(string))
 	if err != nil {
 		return err
 	}
 
-	userToAddObjectId, err := primitive.ObjectIDFromHex(addUserData.UserToAddId.(string))
+	userToAddObjectId, err := primitive.ObjectIDFromHex(addUserData.UserToAdd.(string))
 	if err != nil {
 		return err
 	}

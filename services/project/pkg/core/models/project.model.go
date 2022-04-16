@@ -19,3 +19,9 @@ type Project struct {
 }
 
 type Projects []*Project
+
+type User struct {
+	ID    interface{} `bson:"id" json:"id,omitempty"`
+	Name  string      `bson:"name" json:"name,omitempty"`
+	Image string      `bson:"image" json:"image,omitempty"`
+}

@@ -40,14 +40,14 @@ func (mq *mQueue) Publish(workRequest models.WorkRequest) error {
 	}
 	workRequestBytes := new(bytes.Buffer)
 	type notification struct {
-		NotifiedUserId interface{} `json:"notified_id,omitempty"`
-		NotifierUserId interface{} `json:"notifier_id,omitempty"`
-		ReferenceId    interface{} `json:"reference_id,omitempty"`
+		NotifiedUser interface{} `json:"notified,omitempty"`
+		NotifierUser interface{} `json:"notifier,omitempty"`
+		Reference    interface{} `json:"reference,omitempty"`
 	}
 	notificationSend := notification{
-		NotifiedUserId: workRequest.WorkerId,
-		NotifierUserId: workRequest.OwnerId,
-		ReferenceId:    workRequest.ID,
+		NotifiedUser: workRequest.Worker,
+		NotifierUser: workRequest.Owner,
+		Reference:    workRequest.ID,
 	}
 	json.NewEncoder(workRequestBytes).Encode(notificationSend)
 	err = ch.Publish(

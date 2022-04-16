@@ -17,7 +17,7 @@ func (h workRequestHandler) AnswerWorkRequest(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	answerWorkrequestData.WorkerId = userTokenData.ID
+	answerWorkrequestData.Worker = userTokenData.ID
 	if err := h.workRequestService.AnswerWorkRequest(*answerWorkrequestData); err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

@@ -13,15 +13,16 @@ func (s *notificationService) GetCompleteNotification(notificationId interface{}
 	if err != nil {
 		return nil, err
 	}
-	user, err := getUserInfo(notification.NotifierUserId.(string))
+	user, err := getUserInfo(notification.NotifierUser.(string))
 	if err != nil {
-		return nil, err
 	}
 	//TODO: swithc for evey type of notification
-	workRequest, err := getWorkRequestInfo(notification.ReferenceId.(string))
+	workRequest, err := getWorkRequestInfo(notification.Reference.(string))
+	if err != nil {
+	}
 
-	notification.NotifierUserId = user
-	notification.ReferenceId = workRequest
+	notification.NotifierUser = user
+	notification.Reference = workRequest
 
 	return notification, nil
 }
@@ -46,8 +47,8 @@ func getUserInfo(userId string) (interface{}, error) {
 }
 func getWorkRequestInfo(workRequestId string) (interface{}, error) {
 	workRequest := struct {
-		ProjectId string `json:"project_id,omitempty"`
-		Status    string `json:"status,omitempty"`
+		ProjectId interface{} `json:"project,omitempty"`
+		Status    string      `json:"status,omitempty"`
 	}{}
 
 	//go func to call the microservices of workRequest,workRequest

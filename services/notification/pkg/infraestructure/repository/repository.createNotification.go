@@ -14,28 +14,28 @@ func (r *mongoRepository) CreateNotification(newNotification models.Notification
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 
-	notifierObjectId, err := primitive.ObjectIDFromHex(newNotification.NotifierUserId.(string))
+	notifierObjectId, err := primitive.ObjectIDFromHex(newNotification.NotifierUser.(string))
 	if err != nil {
 		return err
 	}
-	notifiedObjectId, err := primitive.ObjectIDFromHex(newNotification.NotifiedUserId.(string))
+	notifiedObjectId, err := primitive.ObjectIDFromHex(newNotification.NotifiedUser.(string))
 	if err != nil {
 		return err
 	}
 
-	referenceObjectId, err := primitive.ObjectIDFromHex(newNotification.ReferenceId.(string))
+	referenceObjectId, err := primitive.ObjectIDFromHex(newNotification.Reference.(string))
 	if err != nil {
 		return err
 	}
 
 	check := bson.M{}
-	filter := bson.M{"notifier_id": notifierObjectId, "reference_id": referenceObjectId, "notified_id": notifiedObjectId}
+	filter := bson.M{"notifier": notifierObjectId, "reference": referenceObjectId, "notified": notifiedObjectId}
 	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
 		newNotification.Created = time.Now()
 		newNotification.Updated = time.Now()
-		newNotification.NotifierUserId = notifierObjectId
-		newNotification.NotifiedUserId = notifiedObjectId
-		newNotification.ReferenceId = referenceObjectId
+		newNotification.NotifierUser = notifierObjectId
+		newNotification.NotifiedUser = notifiedObjectId
+		newNotification.Reference = referenceObjectId
 		newNotification.Read = false
 		_, err := collection.InsertOne(ctx, newNotification)
 		if err != nil {

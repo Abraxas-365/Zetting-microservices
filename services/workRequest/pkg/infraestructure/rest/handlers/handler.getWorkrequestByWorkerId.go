@@ -22,7 +22,7 @@ func (h *workRequestHandler) GetWorkRequestsByWorker(c *fiber.Ctx) error {
 	}
 	status := c.Params("status")
 	workerId := c.Params("worker_id")
-	workRequests, err := h.workRequestService.GetWorkRequests(workerId, status, page, number, "worker_id")
+	workRequests, err := h.workRequestService.GetWorkRequests(workerId, status, page, number, "worker")
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

@@ -24,6 +24,7 @@ func (r mongoRepository) GetWorkRequest(workRequestId interface{}) (*models.Work
 	if err := collection.FindOne(ctx, filter).Decode(&workRequest); err != nil {
 		return nil, err
 	}
+	workRequest.Project = workRequest.Project.(primitive.ObjectID).Hex()
 	return &workRequest, nil
 
 }

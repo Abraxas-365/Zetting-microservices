@@ -18,7 +18,7 @@ func (h *userHandler) AddProjectToUser(c *fiber.Ctx) error {
 	if err := c.BodyParser(&addProjectData); err != nil {
 		return fiber.ErrBadRequest
 	}
-	addProjectData.UserId = userTokenData.ID
+	addProjectData.User = userTokenData.ID
 	//TODO: Check if what happen if someone put a tipe that doesn't exist on the db
 	document := c.Params("type")
 

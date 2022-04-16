@@ -18,12 +18,12 @@ func (r *mongoRepository) AddProjectToUser(projectData models.AddProjectToUser, 
 	// 	return err
 	// }
 
-	projectObjectId, err := primitive.ObjectIDFromHex(projectData.ProjectId.(string))
+	projectObjectId, err := primitive.ObjectIDFromHex(projectData.Project.(string))
 	if err != nil {
 		return err
 	}
 
-	userObjectId, err := primitive.ObjectIDFromHex(projectData.UserId.(string))
+	userObjectId, err := primitive.ObjectIDFromHex(projectData.User.(string))
 	if err != nil {
 		return err
 	}
