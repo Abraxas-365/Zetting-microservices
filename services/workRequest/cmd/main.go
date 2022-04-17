@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"work-request/internal/rabbit"
 	"work-request/pkg/application"
 	"work-request/pkg/infraestructure/mqueue/publisher"
 	"work-request/pkg/infraestructure/repository"
@@ -17,10 +18,13 @@ func main() {
 
 	mongoUri := os.Getenv("MONGODB_URI")
 	mqUri := os.Getenv("MQ_URI")
-	mqChannelName := os.Getenv("MQ_CHANNEL_NAME")
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "WorkRequests")
-	mq, _ := mqpublisher.NewMQPublisher(mqUri, mqChannelName)
-	service := service.NewWorkRequestService(repo, mq)
+	mq, err := rabbit.NewMQueueConection(mqUri)
+	if err != nil {
+		os.Exit(1)
+	}
+	mqpublisher := mqpublisher.NewMQPublisher(mq)
+	service := service.NewWorkRequestService(repo, mqpublisher)
 	handler := handlers.NewWorkRequestHandler(service)
 	app := fiber.New()
 	app.Use(logger.New())

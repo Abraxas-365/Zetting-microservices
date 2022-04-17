@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+	"projects/internal/rabbit"
 	"projects/pkg/application"
+	"projects/pkg/infraestructure/mqueue/publisher"
 	"projects/pkg/infraestructure/repository"
 	"projects/pkg/infraestructure/rest/handlers"
 	"projects/pkg/infraestructure/rest/routes"
@@ -14,9 +16,15 @@ import (
 
 func main() {
 
+	mqUri := os.Getenv("MQ_URI")
 	mongoUri := os.Getenv("MONGODB_URI")
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Projects")
-	service := service.NewProjectService(repo)
+	mq, err := rabbit.NewMQueueConection(mqUri)
+	if err != nil {
+		panic(err.Error())
+	}
+	mqpublisher := mqpublisher.NewMQPublisher(mq)
+	service := service.NewProjectService(repo, mqpublisher)
 	handlers := handlers.NewProjectHandler(service)
 	app := fiber.New()
 	app.Use(logger.New())

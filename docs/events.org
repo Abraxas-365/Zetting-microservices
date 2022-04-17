@@ -1,0 +1,40 @@
+
+
+
+
+
+
+                   -- > user listen from event --> send user data to notification
+                  |
+                  |
+create workrequest---> create notification ---consume the data from user and project and update
+                  |
+                  |
+                   --> project listen from event -->send project data to notifiation
+
+
+
+
+
+
+
+update user info---->notification update user data
+
+
+
+update project info---->notification update project data
+
+
+
+
+                  -->user listen from event --> send data to project
+                 |
+                 |
+accept workRequest--->project add user and user data---consume data from user
+
+
+
+
+
+publisher
+-intiPublisher va a ser las funciones middleware antes de eviarlo al mq , y eso va a ser lo que llame el service

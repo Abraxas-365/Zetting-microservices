@@ -9,8 +9,8 @@ type Project struct {
 	Name         string      `bson:"name" json:"name,omitempty"`
 	Image        string      `bson:"image" json:"image,omitempty"`
 	Description  string      `bson:"description" json:"description,omitempty"`
-	Owners       interface{} `bson:"owners" json:"owners"`
-	Workers      interface{} `bson:"workers" json:"workers"`
+	Owners       Users       `bson:"owners" json:"owners"`
+	Workers      Users       `bson:"workers" json:"workers"`
 	Color        string      `bson:"color" json:"color,omitempty"`
 	DateStarted  string      `bson:"date_started" json:"date_started,omitempty"`
 	DateFinished string      `bson:"date_finished" json:"date_finished,omitempty"`
@@ -21,7 +21,9 @@ type Project struct {
 type Projects []*Project
 
 type User struct {
-	ID    interface{} `bson:"id" json:"id,omitempty"`
+	ID    interface{} `bson:"_id" json:"id,omitempty"`
 	Name  string      `bson:"name" json:"name,omitempty"`
 	Image string      `bson:"image" json:"image,omitempty"`
 }
+
+type Users []*User

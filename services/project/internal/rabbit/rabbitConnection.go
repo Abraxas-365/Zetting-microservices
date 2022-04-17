@@ -1,4 +1,4 @@
-package mqconsumer
+package rabbit
 
 import (
 	"errors"

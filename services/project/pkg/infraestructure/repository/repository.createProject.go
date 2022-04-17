@@ -21,12 +21,12 @@ func (r *mongoRepository) CreateProject(newProject *models.Project, userId inter
 		return nil, err
 	}
 	check := bson.M{}
-	filter := bson.M{"name": newProject.Name, "owners": bson.A{userIdObjectId}}
+	filter := bson.M{"name": newProject.Name, "owners._id": userIdObjectId}
 	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
 		newProject.Created = time.Now()
 		newProject.Updated = time.Now()
-		newProject.Owners = []primitive.ObjectID{userIdObjectId}
-		newProject.Workers = []primitive.ObjectID{}
+		newProject.Owners = models.Users{&models.User{ID: userIdObjectId}}
+		newProject.Workers = models.Users{}
 		result, err := collection.InsertOne(ctx, newProject)
 		if err != nil {
 			return nil, err

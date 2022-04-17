@@ -11,10 +11,10 @@ var (
 
 type workRequestService struct {
 	projectRepo ports.WorkRequestRepository
-	mqpublisher ports.WorkRequestMQueue
+	mqpublisher ports.WorkRequestMQPublisher
 }
 
-func NewWorkRequestService(workRequestRepo ports.WorkRequestRepository, mqPublisher ports.WorkRequestMQueue) ports.WorkRequestService {
+func NewWorkRequestService(workRequestRepo ports.WorkRequestRepository, mqPublisher ports.WorkRequestMQPublisher) ports.WorkRequestService {
 	return &workRequestService{
 		workRequestRepo,
 		mqPublisher,

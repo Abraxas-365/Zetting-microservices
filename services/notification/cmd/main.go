@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	rabbit "notifications/internal/rabbtit"
 	"notifications/pkg/application"
-	"notifications/pkg/infraestructure/mqueue/consumer"
+	"notifications/pkg/infraestructure/mqueue/consumer/handlers"
+	"notifications/pkg/infraestructure/mqueue/consumer/routes"
 	"notifications/pkg/infraestructure/repository"
 	"notifications/pkg/infraestructure/rest/handlers"
 	"notifications/pkg/infraestructure/rest/routes"
@@ -17,17 +19,20 @@ func main() {
 
 	mongoUri := os.Getenv("MONGODB_URI")
 	mqUri := os.Getenv("MQ_URI")
-	mqChannelName := os.Getenv("MQ_CHANNEL_NAME")
 
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Notifications")
 	service := service.NewNotificationService(repo)
 	handler := handlers.NewNotificationHandler(service)
-	mq, _ := mqconsumer.NewMQueueConsumer(mqUri, mqChannelName, service)
-	go mq.ConsumerWorkRequest()
+	//handler of queue
+	rabbit, _ := rabbit.NewMQueueConection(mqUri)
+	mqhandler := mqHandler.NewMQHandler(service)
+
+	mqconsumer_routes.ConsumerRoutes(rabbit, mqhandler)
 	app := fiber.New()
 	app.Use(logger.New())
 	routes.NotificationRoute(app, handler) //User routes
 	//Routes.
 	fmt.Println("inicando en puerto 3002")
 	app.Listen(":3002")
+
 }

@@ -11,12 +11,14 @@ var (
 )
 
 type projectService struct {
-	projectRepo ports.ProjectRepository
+	projectRepo        ports.ProjectRepository
+	projectMQPublisher ports.ProjectMQPublisher
 }
 
-func NewProjectService(projectRepo ports.ProjectRepository) ports.ProjectService {
+func NewProjectService(projectRepo ports.ProjectRepository, mqPublisher ports.ProjectMQPublisher) ports.ProjectService {
 	return &projectService{
 		projectRepo,
+		mqPublisher,
 	}
 
 }
