@@ -11,6 +11,12 @@ RUN apk update && apk add --no-cache git && apk add --no-cach bash && apk add bu
 RUN mkdir /zetting-project
 WORKDIR /zetting-project
 
+ENV DOCKERIZE_VERSION v0.6.1
+RUN apk add --no-cache openssl \
+ && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+ && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+ && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 # Copy the source from the current directory to the working Directory inside the container
 COPY . .
 
@@ -27,4 +33,4 @@ RUN go build cmd/main.go
 EXPOSE 3001:3001
 
 # Run the executable
-CMD [ "./main" ]
+CMD dockerize -wait tcp://rabbitmq:15672 -timeout 60m ./main

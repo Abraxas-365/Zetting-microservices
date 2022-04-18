@@ -69,6 +69,13 @@ services:
       - mongo
     networks:
       - zetting
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://rabbitmq:15672
+    command: ./main
 
   zetting-project:
     environment:
@@ -82,6 +89,13 @@ services:
       - mongo
     networks:
       - zetting
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://rabbitmq:15672
+    command: ./main
 
   zetting-notification:
     environment:
@@ -96,6 +110,13 @@ services:
       - mongo
     networks:
       - zetting
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://rabbitmq:15672
+    command: ./main
 
   zetting-workrequest:
     environment:
@@ -110,6 +131,13 @@ services:
       - mongo
     networks:
       - zetting
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://rabbitmq:15672
+    command: ./main
 networks:
   zetting:
     driver: bridge
