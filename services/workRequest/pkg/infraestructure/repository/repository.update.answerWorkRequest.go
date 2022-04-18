@@ -14,27 +14,27 @@ func (r *mongoRepository) AnswerWorkRequest(workRequest models.WorkRequest) erro
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 
-	workerObjectId, err := primitive.ObjectIDFromHex(workRequest.Worker.(string))
+	workerObjectId, err := primitive.ObjectIDFromHex(workRequest.Worker.ID.(string))
 	if err != nil {
 		return err
 	}
-	projectObjectId, err := primitive.ObjectIDFromHex(workRequest.Project.(string))
+	projectObjectId, err := primitive.ObjectIDFromHex(workRequest.Project.ID.(string))
 	if err != nil {
 		return err
 	}
 
-	ownerObjectId, err := primitive.ObjectIDFromHex(workRequest.Owner.(string))
+	ownerObjectId, err := primitive.ObjectIDFromHex(workRequest.Owner.ID.(string))
 	if err != nil {
 		return err
 	}
 
 	check := bson.M{}
-	filter := bson.M{"project": projectObjectId, "worker": workerObjectId, "status": workRequest.Status}
+	filter := bson.M{"project._id": projectObjectId, "worker._id": workerObjectId, "status": "P"}
 	updateQuery := bson.M{
 		"$set": bson.M{"status": workRequest.Status},
 	}
 	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
-		filter := bson.M{"project": projectObjectId, "worker": workerObjectId}
+		filter := bson.M{"project._id": projectObjectId, "worker._id": workerObjectId}
 		_, err = collection.UpdateOne(ctx, filter, updateQuery)
 		if err != nil {
 			return err

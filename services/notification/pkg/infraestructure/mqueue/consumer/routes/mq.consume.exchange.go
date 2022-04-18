@@ -8,6 +8,6 @@ import (
 
 func ConsumerRoutes(rabbit rabbit.MQueue, mqHandler mqHandler.MQHandler) error {
 	fmt.Println("INICIANDO CONSUMER ROUTES")
-	rabbit.StartExangeConsumer("WorkRequest", "workrequest", mqHandler.WorkRequest, 1)
+	rabbit.StartExangeConsumer("WorkRequest", "new_workrequest", mqHandler.WorkRequest, 1)
 	return nil
 }

@@ -10,7 +10,6 @@ type WorkRequestHandler interface {
 	CreateWorkRequest(c *fiber.Ctx) error
 	GetWorkRequestsByWorker(c *fiber.Ctx) error
 	GetWorkRequestsByProject(c *fiber.Ctx) error
-	GetWorkRequestsById(c *fiber.Ctx) error
 	AnswerWorkRequest(c *fiber.Ctx) error
 }
 type workRequestHandler struct {

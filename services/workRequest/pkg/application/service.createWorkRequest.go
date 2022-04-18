@@ -12,7 +12,7 @@ func (r *workRequestService) CreateWorkRequest(newWorkRequest models.WorkRequest
 	if err != nil {
 		return nil, err
 	}
-	if err := r.mqpublisher.PublishNewWorkRequest(*WorkRequest, "WorkRequest", "workrequest"); err != nil {
+	if err := r.mqpublisher.PublishNewWorkRequest(*WorkRequest, "WorkRequest", "new_workrequest"); err != nil {
 		// TODO:do something
 		fmt.Println("Rabbit consumer closed - critical Error")
 		os.Exit(1)

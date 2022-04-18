@@ -23,7 +23,7 @@ func (r *mongoRepository) GetNotificationById(notificationId interface{}) (*mode
 	if err := collection.FindOne(ctx, filter).Decode(&notification); err != nil {
 		return nil, err
 	}
-	notification.NotifierUser = notification.NotifierUser.(primitive.ObjectID).Hex()
+	notification.NotifierUser.ID = notification.NotifierUser.ID.(primitive.ObjectID).Hex()
 	notification.Reference = notification.Reference.(primitive.ObjectID).Hex()
 	return &notification, nil
 
