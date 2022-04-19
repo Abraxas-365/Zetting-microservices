@@ -24,7 +24,7 @@ COPY . .
 RUN go get -d -v ./...
 
 # Install the package
-RUN go install -v ./...
+Run go mod tidy
 
 # Build the Go app
 RUN go build cmd/main.go

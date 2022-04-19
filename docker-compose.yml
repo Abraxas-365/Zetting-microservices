@@ -77,6 +77,37 @@ services:
       - tcp://rabbitmq:15672
     command: ./main
 
+  zetting-user-auth:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./services/user-auth/.
+    restart: always
+    ports:
+      - 2000
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+
+  zetting-user-filters-serch:
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+    build: ./services/user-filters-and-searchs/.
+    restart: always
+    ports:
+      - 3006
+    depends_on:
+      - mongo
+    networks:
+      - zetting
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://rabbitmq:15672
+    command: ./main
+
   zetting-project:
     environment:
       MQ_URI: amqp://admin:admin@rabbitmq:5672/

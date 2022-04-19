@@ -21,7 +21,7 @@ func (r *mongoRepository) GetNotifications(userId interface{}, page int) (models
 		return nil, err
 	}
 
-	filter := bson.M{"notified": userObjectId}
+	filter := bson.M{"notified._id": userObjectId}
 	options := options.Find()
 	options.SetLimit(20)
 	options.SetSkip((int64(page) - 1) * 20)

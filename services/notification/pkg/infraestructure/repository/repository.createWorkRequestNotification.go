@@ -23,19 +23,25 @@ func (r *mongoRepository) CreateNotification(newNotification models.Notification
 		return err
 	}
 
-	referenceObjectId, err := primitive.ObjectIDFromHex(newNotification.Reference.(string))
+	workRequestObjectId, err := primitive.ObjectIDFromHex(newNotification.WorkRequest.ID.(string))
+	if err != nil {
+		return err
+	}
+
+	projectObjectId, err := primitive.ObjectIDFromHex(newNotification.WorkRequest.Project.ID.(string))
 	if err != nil {
 		return err
 	}
 
 	check := bson.M{}
-	filter := bson.M{"notifier._id": notifierObjectId, "reference": referenceObjectId, "notified._id": notifiedObjectId}
+	filter := bson.M{"notifier._id": notifierObjectId, "reference": workRequestObjectId, "notified._id": notifiedObjectId}
 	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
 		newNotification.Created = time.Now()
 		newNotification.Updated = time.Now()
 		newNotification.NotifierUser.ID = notifierObjectId
 		newNotification.NotifiedUser.ID = notifiedObjectId
-		newNotification.Reference = referenceObjectId
+		newNotification.WorkRequest.ID = workRequestObjectId
+		newNotification.WorkRequest.Project.ID = projectObjectId
 		newNotification.Read = false
 		_, err := collection.InsertOne(ctx, newNotification)
 		if err != nil {

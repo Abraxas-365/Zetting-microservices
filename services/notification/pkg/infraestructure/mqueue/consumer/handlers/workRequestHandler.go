@@ -34,9 +34,11 @@ func (h *mqHandler) WorkRequest(d amqp.Delivery) bool {
 	notification := models.Notification{
 		NotifierUser: models.User(workRequest.Owner),
 		NotifiedUser: models.User(workRequest.Worker),
-		Reference:    workRequest.ID,
-		Project:      models.Project(workRequest.Project),
 		Type:         "workrequest",
+		WorkRequest: models.WorkRequest{
+			ID:      workRequest.ID,
+			Project: models.Project(workRequest.Project),
+		},
 	}
 
 	if err := h.service.CreateNotification(notification); err != nil {
