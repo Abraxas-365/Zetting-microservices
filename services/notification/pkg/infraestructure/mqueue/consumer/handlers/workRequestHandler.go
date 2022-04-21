@@ -41,7 +41,7 @@ func (h *mqHandler) WorkRequest(d amqp.Delivery) bool {
 		},
 	}
 
-	if err := h.service.CreateNotification(notification); err != nil {
+	if err := h.application.CreateNotification(notification); err != nil {
 		return false
 	}
 	return true

@@ -3,5 +3,6 @@ package ports
 import "work-request/pkg/core/models"
 
 type WorkRequestMQPublisher interface {
-	PublishNewWorkRequest(workRequest models.WorkRequest, exchange string, routingKey string) error
+	NewWorkRequest(workRequest models.WorkRequest, exchange string, routingKey string) error
+	AnswerWorkRequest(answerWorkrequest models.WorkRequest, exchange string, routingKey string) error
 }

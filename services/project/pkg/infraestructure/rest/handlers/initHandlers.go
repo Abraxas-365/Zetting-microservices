@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"projects/pkg/core/ports"
+	"projects/pkg/application"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -14,11 +14,11 @@ type ProjectHandler interface {
 	AddUserToProject(c *fiber.Ctx) error
 }
 type projectHandler struct {
-	projectService ports.ProjectService
+	projectApplication application.ProjectApplication
 }
 
-func NewProjectHandler(projectService ports.ProjectService) ProjectHandler {
+func NewProjectHandler(projectApplication application.ProjectApplication) ProjectHandler {
 	return &projectHandler{
-		projectService,
+		projectApplication,
 	}
 }

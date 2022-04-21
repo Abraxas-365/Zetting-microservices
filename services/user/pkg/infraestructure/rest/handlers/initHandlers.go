@@ -1,21 +1,23 @@
 package handlers
 
 import (
-	"user/pkg/core/ports"
+	"user/pkg/application"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type UserHandler interface {
 	UpdateUser(c *fiber.Ctx) error
-	AddProjectToUser(c *fiber.Ctx) error
+	LoginUser(c *fiber.Ctx) error
+	CreateUser(c *fiber.Ctx) error
+	// CheckEmailExist(c *fiber.Ctx) error
 }
 type userHandler struct {
-	userService ports.UserService
+	userApplication application.UserApplication
 }
 
-func NewUserHandler(userService ports.UserService) UserHandler {
+func NewUserHandler(userApplication application.UserApplication) UserHandler {
 	return &userHandler{
-		userService,
+		userApplication,
 	}
 }

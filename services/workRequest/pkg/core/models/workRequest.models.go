@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"time"
 )
 
@@ -10,6 +11,11 @@ import (
 // "A"=accepted
 // "D"=denied
 // }
+
+var (
+	ErrInvalidStatus = errors.New("Invalid status")
+)
+
 type WorkRequest struct {
 	ID      interface{} `bson:"_id,omitempty" json:"id,omitempty"`
 	Owner   User        `bson:"owner" json:"owner,omitempty"`
@@ -22,14 +28,29 @@ type WorkRequest struct {
 
 type WorkRequests []*WorkRequest
 
-type User struct {
-	ID    interface{} `bson:"_id,omitempty" json:"id,omitempty"`
-	Name  string      `bson:"name" json:"name,omitempty"`
-	Image string      `bson:"image" json:"image,omitempty"`
+func (wr *WorkRequest) Validate() error {
+	switch wr.Status {
+	case "A":
+	case "D":
+	default:
+		return ErrInvalidStatus
+	}
+	if err := wr.Project.Validate(); err != nil {
+		return err
+	}
+	if err := wr.Owner.Validate(); err != nil {
+		return err
+	}
+	if err := wr.Worker.Validate(); err != nil {
+		return err
+	}
+	return nil
 }
 
-type Project struct {
-	ID    interface{} `bson:"_id,omitempty" json:"id,omitempty"`
-	Name  string      `bson:"name" json:"name,omitempty"`
-	Image string      `bson:"image" json:"image,omitempty"`
+func (wr *WorkRequest) AnserWorkrequest() {
+	wr = &WorkRequest{
+		ID:      wr.ID,
+		Status:  wr.Status,
+		Updated: wr.Updated,
+	}
 }

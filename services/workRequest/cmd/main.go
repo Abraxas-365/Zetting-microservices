@@ -21,21 +21,16 @@ func main() {
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "WorkRequests")
 	mq, err := rabbit.NewMQueueConection(mqUri)
 	if err != nil {
+		fmt.Print("Could not create RabbitMQ")
 		os.Exit(1)
 	}
 	mqpublisher := mqpublisher.NewMQPublisher(mq)
-	service := service.NewWorkRequestService(repo, mqpublisher)
-	handler := handlers.NewWorkRequestHandler(service)
+	application := application.NewWorkRequestApplication(repo, mqpublisher)
+	handler := handlers.NewWorkRequestHandler(application)
 	app := fiber.New()
 	app.Use(logger.New())
 	routes.WorkRequestRoute(app, handler) //User routes
-	//Routes.
 	fmt.Println("inicando en puerto 3003")
-	// app.Get("/swagger/*", swagger.HandlerDefault)
-	// app.Get("/swagger/*", swagger.New(swagger.Config{
-	// 	URL:         "swagger/doc.json",
-	// 	DeepLinking: false,
-	// }))
 
 	app.Listen(":3003")
 }

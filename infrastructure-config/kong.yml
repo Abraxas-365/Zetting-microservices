@@ -3,20 +3,6 @@ _transform: true
 
 services:
 
- - name: zetting-user-auth
-   host: zetting-user-auth
-   port: 2000
-   path: /api/auth
-   routes:
-     - name: zetting-user-auth-routes
-       paths:
-         - /api/auth/
-       methods:
-         - POST
-         - GET
-         - UPDATE
-       strip_path: true
-
  - name: zetting-user
    host: zetting-user
    port: 3000
@@ -31,12 +17,12 @@ services:
          - UPDATE
        strip_path: true
 
- - name: zetting-user-filters-and-searchs
-   host: zetting-user-filters-and-searchs
+ - name: zetting-user-filters-search
+   host: zetting-user-filters-search
    port: 3006
    path: /api/users-search
    routes:
-     - name: zetting-user-filters-and-searchs-routes
+     - name: zetting-user-filters-search-routes
        paths:
          - /api/users-search/
        methods:

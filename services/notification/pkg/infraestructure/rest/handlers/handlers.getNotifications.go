@@ -17,7 +17,7 @@ func (h *notificationHandler) GetNotifications(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	myNotifications, err := h.notificationService.GetNotifications(userTokenData.ID, page)
+	myNotifications, err := h.notificationApplication.GetNotifications(userTokenData.ID, page)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

@@ -17,10 +17,10 @@ func (h *workRequestHandler) CreateWorkRequest(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error())
 	}
 	newWorkrequestData.Owner.ID = userTokenData.ID
-	newWorkrequestData, err = h.workRequestService.CreateWorkRequest(*newWorkrequestData)
+	newWorkrequest, err := h.workRequestApplication.CreateWorkRequest(*newWorkrequestData)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	return c.Status(fiber.StatusOK).JSON(newWorkrequestData)
+	return c.Status(fiber.StatusOK).JSON(newWorkrequest)
 
 }

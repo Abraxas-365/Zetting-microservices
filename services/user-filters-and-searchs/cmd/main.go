@@ -16,18 +16,13 @@ func main() {
 	mongoUri := os.Getenv("MONGODB_URI")
 
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Users")
-	service := service.NewUsertService(repo)
-	handler := handlers.NewUserHandler(service)
+	application := application.NewUserApplication(repo)
+	handler := handlers.NewUserHandler(application)
 	app := fiber.New()
 	app.Use(logger.New())
 	routes.UsersRoute(app, handler) //User routes
 	//Routes.
 	fmt.Println("inicando en puerto 3006")
-	// app.Get("/swagger/*", swagger.HandlerDefault)
-	// app.Get("/swagger/*", swagger.New(swagger.Config{
-	// 	URL:         "swagger/doc.json",
-	// 	DeepLinking: false,
-	// }))
 
 	app.Listen(":3006")
 }

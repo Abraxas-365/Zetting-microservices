@@ -21,11 +21,11 @@ func main() {
 	mqUri := os.Getenv("MQ_URI")
 
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Notifications")
-	service := service.NewNotificationService(repo)
-	handler := handlers.NewNotificationHandler(service)
+	application := application.NewNotificationApplication(repo)
+	handler := handlers.NewNotificationHandler(application)
 	//handler of queue
 	rabbit, _ := rabbit.NewMQueueConection(mqUri)
-	mqhandler := mqHandler.NewMQHandler(service)
+	mqhandler := mqHandler.NewMQHandler(application)
 
 	mqconsumer_routes.ConsumerRoutes(rabbit, mqhandler)
 	app := fiber.New()

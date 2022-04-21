@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"notifications/pkg/core/ports"
+	"notifications/pkg/application"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -11,11 +11,11 @@ type NotificationsHandler interface {
 	GetCompleteNotification(c *fiber.Ctx) error
 }
 type notificationHandler struct {
-	notificationService ports.NotificationService
+	notificationApplication application.NotificationApplication
 }
 
-func NewNotificationHandler(notificationService ports.NotificationService) NotificationsHandler {
+func NewNotificationHandler(notificationApplication application.NotificationApplication) NotificationsHandler {
 	return &notificationHandler{
-		notificationService,
+		notificationApplication,
 	}
 }

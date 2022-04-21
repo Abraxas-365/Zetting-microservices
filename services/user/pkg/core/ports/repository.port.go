@@ -4,5 +4,6 @@ import "user/pkg/core/models"
 
 type UserRepository interface {
 	UpdateUser(query interface{}, userId interface{}) error
-	AddProjectToUser(projectData models.AddProjectToUser, document string) error
+	CreateUser(user models.User) error
+	GetUserByEmail(email models.Email) (models.User, error)
 }

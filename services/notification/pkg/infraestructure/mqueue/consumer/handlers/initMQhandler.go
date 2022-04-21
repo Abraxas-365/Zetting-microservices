@@ -1,7 +1,7 @@
 package mqHandler
 
 import (
-	"notifications/pkg/core/ports"
+	"notifications/pkg/application"
 
 	"github.com/streadway/amqp"
 )
@@ -10,11 +10,11 @@ type MQHandler interface {
 	WorkRequest(d amqp.Delivery) bool
 }
 type mqHandler struct {
-	service ports.NotificationService
+	application application.NotificationApplication
 }
 
-func NewMQHandler(notificationService ports.NotificationService) MQHandler {
+func NewMQHandler(notificationApplication application.NotificationApplication) MQHandler {
 	return &mqHandler{
-		notificationService,
+		notificationApplication,
 	}
 }

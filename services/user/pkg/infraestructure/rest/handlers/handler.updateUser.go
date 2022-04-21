@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"user/internal/auth"
 	"user/pkg/core/models"
 
@@ -9,7 +8,6 @@ import (
 )
 
 func (h *userHandler) UpdateUser(c *fiber.Ctx) error {
-	fmt.Println("---UpdateUser Route---")
 	updatedUser := new(models.User)
 	if err := c.BodyParser(&updatedUser); err != nil {
 		return fiber.ErrBadRequest
@@ -18,7 +16,7 @@ func (h *userHandler) UpdateUser(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	if err := h.userService.UpdateUser(updatedUser, userTokenData.ID); err != nil {
+	if err := h.userApplication.UpdateUser(*updatedUser, userTokenData.ID); err != nil {
 		return fiber.ErrBadRequest
 	}
 	return c.SendStatus(fiber.StatusOK)

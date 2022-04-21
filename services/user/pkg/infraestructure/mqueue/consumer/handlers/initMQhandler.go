@@ -9,11 +9,11 @@ type MQHandler interface {
 	WorkRequest(d amqp.Delivery) bool
 }
 type mqHandler struct {
-	service ports.UserService
+	userApplication ports.UserApplication
 }
 
-func NewMQHandler(Service ports.UserService) MQHandler {
+func NewMQHandler(Service ports.UserApplication) MQHandler {
 	return &mqHandler{
-		notificationService,
+		Service,
 	}
 }

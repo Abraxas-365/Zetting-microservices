@@ -8,9 +8,13 @@ import (
 )
 
 func UsersRoute(app *fiber.App, handler handlers.UserHandler) {
+	/*SERVE*/
 	users := app.Group("/api/users")
-	/*Update user*/
+	/*Login user*/
+	users.Post("/login", handler.LoginUser)
+	/*Register user*/
+	users.Post("/register", handler.CreateUser)
+	/*Check email exist*/
+	// users.Get("/email=:email", handler.CheckEmailExist)
 	users.Put("/update", auth.JWTProtected(), handler.UpdateUser)
-	/*Add Project id to user*/
-	users.Put("/add_project", auth.JWTProtected(), handler.AddProjectToUser)
 }
