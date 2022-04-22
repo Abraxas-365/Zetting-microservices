@@ -4,6 +4,7 @@ import (
 	"errors"
 	"projects/pkg/core/models"
 	"projects/pkg/core/ports"
+	"projects/pkg/core/service"
 )
 
 var (
@@ -12,7 +13,7 @@ var (
 )
 
 type ProjectApplication interface {
-	CreateProject(newProject *models.Project, userId interface{}) (interface{}, error)
+	CreateProject(newProject models.Project, userId interface{}) (interface{}, error)
 	GetProjects(userId interface{}, document string, page int) (models.Projects, error)
 	AddUserToProject(addUserData models.AddUserToProject, document string) error
 	GetProjectByProjectId(projectId interface{}) (models.Project, error)
@@ -20,12 +21,14 @@ type ProjectApplication interface {
 type projectApplication struct {
 	projectRepo        ports.ProjectRepository
 	projectMQPublisher ports.ProjectMQPublisher
+	projectService     service.ProjectService
 }
 
-func NewProjectApplication(projectRepo ports.ProjectRepository, mqPublisher ports.ProjectMQPublisher) ProjectApplication {
+func NewProjectApplication(projectRepo ports.ProjectRepository, mqPublisher ports.ProjectMQPublisher, projectService service.ProjectService) ProjectApplication {
 	return &projectApplication{
 		projectRepo,
 		mqPublisher,
+		projectService,
 	}
 
 }

@@ -7,4 +7,5 @@ type WorkRequestRepository interface {
 	GetWorkRequests(referenceId interface{}, status string, page int, number int, document string) (models.WorkRequests, error)
 	AnswerWorkRequest(workRequest models.WorkRequest) error
 	UpdateWorkRequest(query interface{}, workRequestId interface{}) error
+	IsWorkrequestExist(newWorkRequest models.WorkRequest) bool
 }

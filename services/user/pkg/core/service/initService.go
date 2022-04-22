@@ -20,6 +20,7 @@ type UserService interface {
 type ServiceRepository interface {
 	GetUserByEmail(email models.Email) (models.User, error)
 	CreateUser(user models.User) error
+	IsUserExsist(user models.User) bool
 }
 type userService struct {
 	userRepo ServiceRepository

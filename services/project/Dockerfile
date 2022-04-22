@@ -13,9 +13,9 @@ WORKDIR /zetting-project
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN apk add --no-cache openssl \
- && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Copy the source from the current directory to the working Directory inside the container
 COPY . .
@@ -24,7 +24,8 @@ COPY . .
 RUN go get -d -v ./...
 
 # Install the package
-RUN go install -v ./...
+# RUN go install -v ./...
+RUN go mod tidy
 
 # Build the Go app
 RUN go build cmd/main.go

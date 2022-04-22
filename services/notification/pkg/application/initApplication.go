@@ -4,6 +4,7 @@ import (
 	"errors"
 	"notifications/pkg/core/models"
 	"notifications/pkg/core/ports"
+	"notifications/pkg/core/service"
 )
 
 var (
@@ -17,12 +18,14 @@ type NotificationApplication interface {
 	GetCompleteNotification(notificationId interface{}) (models.Notification, error)
 }
 type notificationApplication struct {
-	notificationRepo ports.NotificationRepository
+	notificationRepo    ports.NotificationRepository
+	notificationService service.NotificationService
 }
 
-func NewNotificationApplication(notificationRepo ports.NotificationRepository) NotificationApplication {
+func NewNotificationApplication(notificationRepo ports.NotificationRepository, notificationService service.NotificationService) NotificationApplication {
 	return &notificationApplication{
 		notificationRepo,
+		notificationService,
 	}
 
 }

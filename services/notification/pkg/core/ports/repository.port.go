@@ -6,4 +6,5 @@ type NotificationRepository interface {
 	CreateNotification(newNotification models.Notification) error
 	GetNotifications(userId interface{}, page int) (models.Notifications, error)
 	GetNotificationById(notificationId interface{}) (models.Notification, error)
+	IsNotificationExist(newNotification models.Notification) bool
 }

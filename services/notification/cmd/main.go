@@ -4,6 +4,7 @@ import (
 	"fmt"
 	rabbit "notifications/internal/rabbtit"
 	"notifications/pkg/application"
+	"notifications/pkg/core/service"
 	"notifications/pkg/infraestructure/mqueue/consumer/handlers"
 	"notifications/pkg/infraestructure/mqueue/consumer/routes"
 	"notifications/pkg/infraestructure/repository"
@@ -21,13 +22,19 @@ func main() {
 	mqUri := os.Getenv("MQ_URI")
 
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Notifications")
-	application := application.NewNotificationApplication(repo)
+	service := service.NewNotificationService(repo)
+	application := application.NewNotificationApplication(repo, service)
 	handler := handlers.NewNotificationHandler(application)
 	//handler of queue
-	rabbit, _ := rabbit.NewMQueueConection(mqUri)
+	mq, err := rabbit.NewMQueueConection(mqUri)
+	if err != nil {
+		fmt.Print(err.Error())
+		os.Exit(1)
+	}
+
 	mqhandler := mqHandler.NewMQHandler(application)
 
-	mqconsumer_routes.ConsumerRoutes(rabbit, mqhandler)
+	mqconsumer_routes.ConsumerRoutes(mq, mqhandler)
 	app := fiber.New()
 	app.Use(logger.New())
 	routes.NotificationRoute(app, handler) //User routes
