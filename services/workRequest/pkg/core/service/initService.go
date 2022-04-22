@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"work-request/pkg/core/models"
+	"work-request/pkg/core/ports"
 )
 
 var (
@@ -15,15 +16,11 @@ type WorkRequestService interface {
 	CreateWorkRequest(workRequest models.WorkRequest) error
 }
 
-type ServiceRepository interface {
-	IsUserExsist(workRequest models.WorkRequest) bool
-	CreateWorkRequest(workRequest models.WorkRequest) error
-}
 type workRequestService struct {
-	workRequestRepo ServiceRepository
+	workRequestRepo ports.WorkRequestRepository
 }
 
-func NewUsertService(workRequestRepo ServiceRepository) WorkRequestService {
+func NewUsertService(workRequestRepo ports.WorkRequestRepository) WorkRequestService {
 	return &workRequestService{
 		workRequestRepo,
 	}

@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"projects/pkg/core/models"
+	"projects/pkg/core/ports"
 )
 
 var (
@@ -15,15 +16,11 @@ type ProjectService interface {
 	CreateProject(project models.Project, userId interface{}) (interface{}, error)
 }
 
-type ServiceRepository interface {
-	CreateProject(project models.Project, userId interface{}) (interface{}, error)
-	IsProjectExist(newProject models.Project, userId interface{}) bool
-}
 type projectService struct {
-	projectRepo ServiceRepository
+	projectRepo ports.ProjectRepository
 }
 
-func NewProjectService(projectRepo ServiceRepository) ProjectService {
+func NewProjectService(projectRepo ports.ProjectRepository) ProjectService {
 	return &projectService{
 		projectRepo,
 	}

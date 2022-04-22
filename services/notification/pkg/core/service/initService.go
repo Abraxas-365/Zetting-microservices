@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"notifications/pkg/core/models"
+	"notifications/pkg/core/ports"
 )
 
 var (
@@ -14,16 +15,11 @@ var (
 type NotificationService interface {
 	CreateNotification(newNotification models.Notification) error
 }
-
-type ServiceRepository interface {
-	CreateNotification(newNotification models.Notification) error
-	IsNotificationExist(newNotification models.Notification) bool
-}
 type notificationService struct {
-	notificationRepo ServiceRepository
+	notificationRepo ports.NotificationRepository
 }
 
-func NewNotificationService(notificationRepo ServiceRepository) NotificationService {
+func NewNotificationService(notificationRepo ports.NotificationRepository) NotificationService {
 	return &notificationService{
 		notificationRepo,
 	}

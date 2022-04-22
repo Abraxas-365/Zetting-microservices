@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"user/pkg/core/models"
+	"user/pkg/core/ports"
 )
 
 var (
@@ -17,16 +18,11 @@ type UserService interface {
 	CreateUser(user models.User) error
 }
 
-type ServiceRepository interface {
-	GetUserByEmail(email models.Email) (models.User, error)
-	CreateUser(user models.User) error
-	IsUserExsist(user models.User) bool
-}
 type userService struct {
-	userRepo ServiceRepository
+	userRepo ports.UserRepository
 }
 
-func NewUsertService(userRepo ServiceRepository) UserService {
+func NewUsertService(userRepo ports.UserRepository) UserService {
 	return &userService{
 		userRepo,
 	}
