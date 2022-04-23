@@ -20,7 +20,7 @@ type workRequestService struct {
 	workRequestRepo ports.WorkRequestRepository
 }
 
-func NewUsertService(workRequestRepo ports.WorkRequestRepository) WorkRequestService {
+func NewWorRequesttService(workRequestRepo ports.WorkRequestRepository) WorkRequestService {
 	return &workRequestService{
 		workRequestRepo,
 	}

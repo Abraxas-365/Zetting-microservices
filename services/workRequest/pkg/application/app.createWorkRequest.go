@@ -6,11 +6,14 @@ import (
 	"work-request/pkg/core/models"
 )
 
-func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkRequest) (models.WorkRequest, error) {
-	newWorkRequest.Status = "P"
+func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkRequest) error {
+	if err := r.projectService.CreateWorkRequest(newWorkRequest); err != nil {
+		return err
+	}
+
 	WorkRequest, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
 	if err != nil {
-		return models.WorkRequest{}, err
+		return err
 	}
 	if err := r.mqpublisher.NewWorkRequest(WorkRequest, "WorkRequest", "new_workrequest"); err != nil {
 		// TODO:do something
@@ -18,6 +21,6 @@ func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkReq
 		os.Exit(1)
 	}
 
-	return WorkRequest, nil
+	return nil
 
 }

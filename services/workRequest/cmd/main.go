@@ -5,6 +5,7 @@ import (
 	"os"
 	"work-request/internal/rabbit"
 	"work-request/pkg/application"
+	"work-request/pkg/core/service"
 	"work-request/pkg/infraestructure/mqueue/publisher"
 	"work-request/pkg/infraestructure/repository"
 	"work-request/pkg/infraestructure/rest/handlers"
@@ -25,7 +26,8 @@ func main() {
 		os.Exit(1)
 	}
 	mqpublisher := mqpublisher.NewMQPublisher(mq)
-	application := application.NewWorkRequestApplication(repo, mqpublisher)
+	service := service.NewWorRequesttService(repo)
+	application := application.NewWorkRequestApplication(repo, mqpublisher, service)
 	handler := handlers.NewWorkRequestHandler(application)
 	app := fiber.New()
 	app.Use(logger.New())

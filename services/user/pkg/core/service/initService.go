@@ -15,14 +15,14 @@ var (
 
 type UserService interface {
 	Auth(email models.Email, password models.Password) (models.User, error)
-	CreateUser(user models.User) error
+	CanCreateUser(user models.User) error
 }
 
 type userService struct {
 	userRepo ports.UserRepository
 }
 
-func NewUsertService(userRepo ports.UserRepository) UserService {
+func NewUserService(userRepo ports.UserRepository) UserService {
 	return &userService{
 		userRepo,
 	}

@@ -9,9 +9,9 @@ RUN apk update && apk add --no-cache git && apk add --no-cach bash && apk add bu
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN apk add --no-cache openssl \
- && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Setup folders
 RUN mkdir /zetting-notification
@@ -21,10 +21,10 @@ WORKDIR /zetting-notification
 COPY . .
 
 # Download all the dependencies
-RUN go get -d -v ./...
+# RUN go get -d -v ./...
 
 # Install the package
-RUN go build cmd/main.go
+RUN go mod tidy
 
 # Build the Go app
 RUN go build cmd/main.go

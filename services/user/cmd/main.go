@@ -17,7 +17,7 @@ func main() {
 	mongoUri := os.Getenv("MONGODB_URI")
 
 	repo, _ := repository.NewMongoRepository(mongoUri, "Zetting", 10, "Users")
-	service := service.NewUsertService(repo)
+	service := service.NewUserService(repo)
 	application := application.NewUserApplication(repo, service)
 	handler := handlers.NewUserHandler(application)
 	app := fiber.New()

@@ -8,9 +8,13 @@ import (
 
 func (s *projectApplication) CreateProject(newProject models.Project, userId interface{}) (interface{}, error) {
 
-	projectId, err := s.projectService.CreateProject(newProject, userId)
+	if err := s.projectService.CanCreateProject(newProject, userId); err != nil {
+		return nil, err
+	}
+
+	projectId, err := s.projectRepo.CreateProject(newProject, userId)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	if err := s.projectMQPublisher.NewProject(newProject, "Project", "newProject"); err != nil {
 		// TODO:do something

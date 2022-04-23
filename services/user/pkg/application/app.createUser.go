@@ -4,11 +4,15 @@ import (
 	"user/pkg/core/models"
 )
 
-func (r *userApplication) CreateUser(user models.User) (models.User, string, error) {
+func (a *userApplication) CreateUser(user models.User) (models.User, string, error) {
 
-	if err := r.userService.CreateUser(user); err != nil {
+	if err := a.userService.CanCreateUser(user); err != nil {
 		return models.User{}, "", err
 	}
-	return r.LoginUser(user.Contact.Email, user.Password)
+	if err := a.userRepo.CreateUser(user); err != nil {
+		return models.User{}, "", err
+	}
+
+	return a.LoginUser(user.Contact.Email, user.Password)
 
 }

@@ -5,7 +5,6 @@ import (
 	"time"
 	"work-request/pkg/core/models"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -28,22 +27,17 @@ func (r *mongoRepository) CreateWorkRequest(newWorkRequest models.WorkRequest) (
 	if err != nil {
 		return models.WorkRequest{}, err
 	}
-	check := bson.M{}
-	filter := bson.M{"project._id": projectObjectId, "worker._id": workerObjectId}
-	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
-		newWorkRequest.Created = time.Now()
-		newWorkRequest.Updated = time.Now()
-		newWorkRequest.Owner.ID = ownerObjectId
-		newWorkRequest.Worker.ID = workerObjectId
-		newWorkRequest.Project.ID = projectObjectId
-		newWorkRequest.Status = "P"
-		response, err := collection.InsertOne(ctx, newWorkRequest)
-		if err != nil {
-			return models.WorkRequest{}, err
-		}
-		newWorkRequest.ID = response.InsertedID.(primitive.ObjectID).Hex()
-		return newWorkRequest, nil
+	newWorkRequest.Created = time.Now()
+	newWorkRequest.Updated = time.Now()
+	newWorkRequest.Owner.ID = ownerObjectId
+	newWorkRequest.Worker.ID = workerObjectId
+	newWorkRequest.Project.ID = projectObjectId
+	newWorkRequest.Status = "P"
+	response, err := collection.InsertOne(ctx, newWorkRequest)
+	if err != nil {
+		return models.WorkRequest{}, err
 	}
-	return models.WorkRequest{}, ErrConflict
+	newWorkRequest.ID = response.InsertedID.(primitive.ObjectID).Hex()
+	return newWorkRequest, nil
 
 }

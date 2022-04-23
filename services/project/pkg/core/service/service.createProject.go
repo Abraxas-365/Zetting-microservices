@@ -2,16 +2,11 @@ package service
 
 import "projects/pkg/core/models"
 
-func (s *projectService) CreateProject(project models.Project, userId interface{}) (interface{}, error) {
+func (s *projectService) CanCreateProject(project models.Project, userId interface{}) error {
 	//TODO: logic for creating project and apllay validations
 	if s.projectRepo.IsProjectExist(project, userId) {
-		return nil, ErrProjectExists
+		return ErrProjectExists
 	}
-
-	projectId, err := s.projectRepo.CreateProject(project, userId)
-	if err != nil {
-		return nil, err
-	}
-	return projectId, nil
+	return nil
 
 }
