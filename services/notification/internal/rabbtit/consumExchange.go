@@ -26,7 +26,7 @@ func (mq MQueue) StartExangeConsumer(
 	}
 	q, err := mq.channel.QueueDeclare(
 		"",    // name
-		false, // durable
+		true,  // durable
 		false, // delete when unused
 		true,  // exclusive
 		false, // no-wait

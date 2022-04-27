@@ -1,25 +1,19 @@
 package application
 
 import (
-	"work-request/pkg/core/events"
 	"work-request/pkg/core/models"
 )
 
 func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkRequest) error {
-	if err := r.projectService.CreateWorkRequest(newWorkRequest); err != nil {
+	if err := r.projectService.CanCreateWorkRequest(newWorkRequest); err != nil {
 		return err
 	}
 
-	workRequest, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
+	event, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
 	if err != nil {
 		return err
 	}
-	r.mqpublisher.NewWorkRequest(events.WorkrequestCreated{
-		ID:      workRequest.ID,
-		Owner:   workRequest.Owner,
-		Worker:  workRequest.Worker,
-		Project: workRequest.Project,
-	})
+	r.mqpublisher.NewWorkRequest(event)
 	return nil
 
 }

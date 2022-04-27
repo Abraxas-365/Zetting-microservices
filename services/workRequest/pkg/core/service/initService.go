@@ -13,7 +13,7 @@ var (
 )
 
 type WorkRequestService interface {
-	CreateWorkRequest(workRequest models.WorkRequest) error
+	CanCreateWorkRequest(workRequest models.WorkRequest) error
 }
 
 type workRequestService struct {

@@ -7,7 +7,9 @@ import (
 )
 
 type MQHandler interface {
-	WorkRequest(d amqp.Delivery) bool
+	WorkRequestCreated(d amqp.Delivery) bool
+	WorkRequestAccepted(d amqp.Delivery) bool
+	WorkRequestDenied(d amqp.Delivery) bool
 }
 type mqHandler struct {
 	application application.NotificationApplication

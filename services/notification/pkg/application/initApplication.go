@@ -8,8 +8,9 @@ import (
 )
 
 var (
-	ErrUnauthorized = errors.New("Unauthorized")
-	ErrUserNotFound = errors.New("User not found")
+	ErrUnauthorized       = errors.New("Unauthorized")
+	ErrUserNotFound       = errors.New("User not found")
+	ErrNotificationExists = errors.New("Notification exists")
 )
 
 type NotificationApplication interface {

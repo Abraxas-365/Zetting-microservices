@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"notifications/pkg/core/models"
 	"notifications/pkg/core/ports"
 )
 
@@ -13,7 +12,6 @@ var (
 )
 
 type NotificationService interface {
-	CreateNotification(newNotification models.Notification) error
 }
 type notificationService struct {
 	notificationRepo ports.NotificationRepository
