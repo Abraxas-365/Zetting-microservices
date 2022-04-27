@@ -1,18 +1,19 @@
 package mqHandler
 
 import (
+	"user/pkg/application"
+
 	"github.com/streadway/amqp"
-	"user/pkg/core/ports"
 )
 
 type MQHandler interface {
 	WorkRequest(d amqp.Delivery) bool
 }
 type mqHandler struct {
-	userApplication ports.UserApplication
+	userApplication application.UserApplication
 }
 
-func NewMQHandler(Service ports.UserApplication) MQHandler {
+func NewMQHandler(Service application.UserApplication) MQHandler {
 	return &mqHandler{
 		Service,
 	}

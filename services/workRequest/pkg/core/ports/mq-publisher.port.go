@@ -1,8 +1,10 @@
 package ports
 
-import "work-request/pkg/core/models"
+import (
+	"work-request/pkg/core/events"
+)
 
 type WorkRequestMQPublisher interface {
-	NewWorkRequest(workRequest models.WorkRequest, exchange string, routingKey string) error
-	AnswerWorkRequest(answerWorkrequest models.WorkRequest, exchange string, routingKey string) error
+	NewWorkRequest(event events.Event) error
+	AnswerWorkRequest(event events.Event) error
 }

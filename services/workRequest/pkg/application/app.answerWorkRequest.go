@@ -1,8 +1,7 @@
 package application
 
 import (
-	"fmt"
-	"os"
+	"work-request/pkg/core/events"
 	"work-request/pkg/core/models"
 )
 
@@ -18,13 +17,21 @@ func (s *workRequestApplication) AnswerWorkRequest(workRequest models.WorkReques
 		return err
 	}
 	//sent to rabbitMQ
-	fmt.Println("PRojectId", workRequest.Project.ID)
-	workRequest.AnserWorkrequest()
-	fmt.Println("Work request answer: ", workRequest)
-	if err := s.mqpublisher.AnswerWorkRequest(workRequest, "WorkRequest", "anser_workrequest"); err != nil {
-		//TODO: do something with the error
-		fmt.Println("Rabbit consumer closed - critical Error")
-		os.Exit(1)
+	switch workRequest.Status {
+	case "A":
+		s.mqpublisher.AnswerWorkRequest(events.WorkrequestAccepted{
+			ID:      workRequest.ID,
+			Owner:   workRequest.Owner,
+			Worker:  workRequest.Worker,
+			Project: workRequest.Project,
+		})
+	case "B":
+		s.mqpublisher.AnswerWorkRequest(events.WorkrequestDenied{
+			ID:      workRequest.ID,
+			Owner:   workRequest.Owner,
+			Worker:  workRequest.Worker,
+			Project: workRequest.Project,
+		})
 	}
 
 	return nil

@@ -1,8 +1,7 @@
 package application
 
 import (
-	"fmt"
-	"os"
+	"work-request/pkg/core/events"
 	"work-request/pkg/core/models"
 )
 
@@ -11,16 +10,16 @@ func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkReq
 		return err
 	}
 
-	WorkRequest, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
+	workRequest, err := r.projectRepo.CreateWorkRequest(newWorkRequest)
 	if err != nil {
 		return err
 	}
-	if err := r.mqpublisher.NewWorkRequest(WorkRequest, "WorkRequest", "new_workrequest"); err != nil {
-		// TODO:do something
-		fmt.Println("Rabbit consumer closed - critical Error")
-		os.Exit(1)
-	}
-
+	r.mqpublisher.NewWorkRequest(events.WorkrequestCreated{
+		ID:      workRequest.ID,
+		Owner:   workRequest.Owner,
+		Worker:  workRequest.Worker,
+		Project: workRequest.Project,
+	})
 	return nil
 
 }

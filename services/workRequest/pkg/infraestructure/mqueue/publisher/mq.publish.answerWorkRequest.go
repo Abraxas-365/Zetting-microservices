@@ -3,15 +3,20 @@ package mqpublisher
 import (
 	"bytes"
 	"encoding/json"
-	"work-request/pkg/core/models"
+	"fmt"
+	"os"
+	"work-request/pkg/core/events"
 )
 
-func (mq *mqPublisher) AnswerWorkRequest(answerWorkrequest models.WorkRequest, exchange string, routingKey string) error {
+func (mq *mqPublisher) AnswerWorkRequest(event events.Event) error {
+	fmt.Println(event.Name())
+	fmt.Println(event)
 
-	answerWorkrequest.AnserWorkrequest()
-	answerWorkRequestBytes := new(bytes.Buffer)
-	json.NewEncoder(answerWorkRequestBytes).Encode(answerWorkrequest)
-	if err := mq.publisher.PublishToExange(exchange, routingKey, answerWorkRequestBytes.Bytes()); err != nil {
+	eventBytes := new(bytes.Buffer)
+	json.NewEncoder(eventBytes).Encode(event)
+	if err := mq.publisher.PublishToExange(event.Exchange(), event.Routing(), eventBytes.Bytes()); err != nil {
+		fmt.Println("Rabbit consumer closed - critical Error")
+		os.Exit(1)
 		return err
 	}
 

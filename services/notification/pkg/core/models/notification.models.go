@@ -27,9 +27,3 @@ type Project struct {
 	Name  string      `json:"name,omitempty"`
 	Image string      `json:"image,omitempty"`
 }
-
-type WorkRequest struct {
-	ID      interface{} `bson:"_id,omitempty" json:"id,omitempty"`
-	Project Project     `bson:"project" json:"project,omitempty"`
-	Created time.Time   `bson:"created_at" json:"created_at,omitempty"`
-}
