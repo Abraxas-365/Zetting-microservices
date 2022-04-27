@@ -10,7 +10,7 @@ type UserHandler interface {
 	UpdateUser(c *fiber.Ctx) error
 	LoginUser(c *fiber.Ctx) error
 	CreateUser(c *fiber.Ctx) error
-	// CheckEmailExist(c *fiber.Ctx) error
+	GetUserById(c *fiber.Ctx) error
 }
 type userHandler struct {
 	userApplication application.UserApplication

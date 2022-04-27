@@ -13,7 +13,7 @@ func (h *projectHandler) GetMyProjects(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error())
 	}
 	page, _ := strconv.Atoi(c.Params("page"))
-	myProjects, err := h.projectApplication.GetProjects(userTokenData.ID, "owners", page)
+	myProjects, err := h.projectApplication.GetProjects(userTokenData.ID, "owners._id", page)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
@@ -28,7 +28,7 @@ func (h *projectHandler) GetProjectsWorkingOn(c *fiber.Ctx) error {
 	}
 
 	page, _ := strconv.Atoi(c.Params("page"))
-	projects, err := h.projectApplication.GetProjects(userTokenData.ID, "workers", page)
+	projects, err := h.projectApplication.GetProjects(userTokenData.ID, "workers._id", page)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

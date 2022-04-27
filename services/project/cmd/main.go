@@ -6,6 +6,8 @@ import (
 	"projects/internal/rabbit"
 	"projects/pkg/application"
 	"projects/pkg/core/service"
+	mqHandler "projects/pkg/infraestructure/mqueue/consumer/handlers"
+	"projects/pkg/infraestructure/mqueue/consumer/routes"
 	"projects/pkg/infraestructure/mqueue/publisher"
 	"projects/pkg/infraestructure/repository"
 	"projects/pkg/infraestructure/rest/handlers"
@@ -26,8 +28,11 @@ func main() {
 		fmt.Print(err.Error())
 		os.Exit(1)
 	}
+
 	mqpublisher := mqpublisher.NewMQPublisher(mq)
 	application := application.NewProjectApplication(repo, mqpublisher, service)
+	mqhandler := mqHandler.NewMQHandler(application)
+	mqconsumer_routes.ConsumerRoutes(mq, mqhandler)
 	handlers := handlers.NewProjectHandler(application)
 	app := fiber.New()
 	app.Use(logger.New())

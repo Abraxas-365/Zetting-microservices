@@ -17,4 +17,6 @@ func UsersRoute(app *fiber.App, handler handlers.UserHandler) {
 	/*Check email exist*/
 	// users.Get("/email=:email", handler.CheckEmailExist)
 	users.Put("/update", auth.JWTProtected(), handler.UpdateUser)
+	/*get user by id*/
+	users.Get("/id=:id", handler.GetUserById)
 }

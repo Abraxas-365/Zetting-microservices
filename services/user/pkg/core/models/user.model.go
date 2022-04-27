@@ -24,6 +24,17 @@ type User struct {
 	Updated     time.Time   `bson:"updated_at" json:"updated_at,omitempty"`
 }
 
+type UserPublic struct {
+	ID          interface{} `bson:"_id,omitempty" json:"id"`
+	Name        string      `bson:"name" json:"name,omitempty"`
+	PerfilImage string      `bson:"perfil_image" json:"perfil_image,omitempty"`
+	Profession  Profession  `bson:"profession" json:"profession,omitempty"`
+	Features    Features    `bson:"features" json:"features,omitempty"`
+	Verified    bool        `bson:"verified" json:"verified,omitempty"`
+	Created     time.Time   `bson:"created_at" json:"created_at,omitempty"`
+	Updated     time.Time   `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
 func (u *User) Validate() error {
 	switch true {
 	case u.Contact.Email == "":

@@ -14,10 +14,12 @@ func (r *mongoRepository) GetUsersByProfession(profession string, page int) (mod
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 	var users models.Users
+	userObjecId, err := primitive.ObjectIDFromHex("626649d17c27f186febe8ff0")
 	options := options.Find()
 	options.SetLimit(20)
 	options.SetSkip((int64(page) - 1) * 20)
-	filter := bson.D{primitive.E{Key: "profession.name", Value: profession}}
+	// filter := bson.M{"profession.name": profession}
+	filter := bson.M{"_id": bson.M{"$ne": userObjecId}, "profession.name": profession}
 	cur, err := collection.Find(ctx, filter, options)
 	if err != nil {
 		return nil, err

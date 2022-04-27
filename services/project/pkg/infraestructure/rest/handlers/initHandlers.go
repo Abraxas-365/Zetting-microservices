@@ -11,7 +11,6 @@ type ProjectHandler interface {
 	GetMyProjects(c *fiber.Ctx) error
 	GetProjectsWorkingOn(c *fiber.Ctx) error
 	GetProjectByProjectId(c *fiber.Ctx) error
-	AddUserToProject(c *fiber.Ctx) error
 }
 type projectHandler struct {
 	projectApplication application.ProjectApplication

@@ -19,7 +19,7 @@ type Notifications []*Notification
 type User struct {
 	ID    interface{} `bson:"_id,omitempty" json:"id,omitempty"`
 	Name  string      `bson:"name" json:"name,omitempty"`
-	Image string      `bson:"image" json:"image,omitempty"`
+	Image string      `bson:"perfil_image" json:"perfil_image,omitempty"`
 }
 
 type Project struct {

@@ -1,10 +1,8 @@
 package application
 
-import "projects/pkg/core/models"
+func (s *projectApplication) AddUserToProject(userID interface{}, projectId interface{}, document string) error {
 
-func (s *projectApplication) AddUserToProject(addUserData models.AddUserToProject, document string) error {
-
-	if err := s.projectRepo.AddUserToProject(addUserData, document); err != nil {
+	if err := s.projectRepo.AddUserToProject(userID, projectId, "workers"); err != nil {
 
 		return err
 	}

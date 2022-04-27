@@ -35,21 +35,24 @@ func (wr *WorkRequest) Validate() error {
 	default:
 		return ErrInvalidStatus
 	}
-	if err := wr.Project.Validate(); err != nil {
-		return err
-	}
-	if err := wr.Owner.Validate(); err != nil {
-		return err
-	}
-	if err := wr.Worker.Validate(); err != nil {
-		return err
-	}
+	// if err := wr.Project.Validate(); err != nil {
+	// 	return err
+	// }
+	// if err := wr.Owner.Validate(); err != nil {
+	// 	return err
+	// }
+	// if err := wr.Worker.Validate(); err != nil {
+	// 	return err
+	// }
 	return nil
 }
 
 func (wr *WorkRequest) AnserWorkrequest() {
 	wr = &WorkRequest{
 		ID:      wr.ID,
+		Owner:   wr.Owner,
+		Project: wr.Project,
+		Worker:  wr.Worker,
 		Status:  wr.Status,
 		Updated: wr.Updated,
 	}

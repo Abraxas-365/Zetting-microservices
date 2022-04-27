@@ -18,6 +18,8 @@ type UserApplication interface {
 	UpdateUser(userDataToUpdate models.User, userId interface{}) error
 	CreateUser(user models.User) (models.User, string, error)
 	LoginUser(email models.Email, password models.Password) (models.User, string, error)
+	IsUserExsist(email models.Email) error
+	GetUserById(userId interface{}) (models.UserPublic, error)
 }
 
 type userApplication struct {

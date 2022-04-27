@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r *mongoRepository) AnswerWorkRequest(workRequest models.WorkRequest) error {
+func (r *mongoRepository) AnswerWorkRequest(workRequest models.WorkRequest) (models.WorkRequest, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
@@ -16,37 +16,26 @@ func (r *mongoRepository) AnswerWorkRequest(workRequest models.WorkRequest) erro
 
 	workerObjectId, err := primitive.ObjectIDFromHex(workRequest.Worker.ID.(string))
 	if err != nil {
-		return err
+		return models.WorkRequest{}, err
 	}
 	workRequestObjectId, err := primitive.ObjectIDFromHex(workRequest.ID.(string))
 	if err != nil {
-		return err
+		return models.WorkRequest{}, err
 	}
 
-	check := bson.M{}
-	filter := bson.M{"_id": workRequestObjectId, "worker._id": workerObjectId, "status": "P"}
 	updateQuery := bson.M{
 		"$set": bson.M{"status": workRequest.Status},
 	}
-	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
-		filter := bson.M{"_id": workerObjectId, "worker._id": workerObjectId}
-		_, err = collection.UpdateOne(ctx, filter, updateQuery)
-		if err != nil {
-			return err
-		}
-		/*TODO eliminate this and call from the service to RabbitMQ to sned to project service this action*/
-		// 	collection = r.client.Database(r.database).Collection("Projects")
-		// 	filter = bson.M{"_id": projectObjectId, "owners": bson.A{ownerObjectId}}
-
-		// 	updateQuery = bson.M{
-		// 		"$push": bson.M{
-		// 			"workers": workerObjectId,
-		// 		},
-		// 	}
-		// 	if _, err := collection.UpdateOne(ctx, filter, updateQuery); err != nil {
-		// 		return err
-		// 	}
+	filter := bson.M{"_id": workRequestObjectId, "worker._id": workerObjectId, "status": "P"}
+	_, err = collection.UpdateOne(ctx, filter, updateQuery)
+	if err != nil {
+		return models.WorkRequest{}, err
+	}
+	workRequestFromdb := new(models.WorkRequest)
+	filter = bson.M{"_id": workRequestObjectId}
+	if err := collection.FindOne(ctx, filter).Decode(&workRequestFromdb); err != nil {
+		return models.WorkRequest{}, err
 	}
 
-	return nil
+	return *workRequestFromdb, nil
 }

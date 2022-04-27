@@ -150,6 +150,14 @@ services:
       - -wait
       - tcp://rabbitmq:15672
     command: ./main
+
+  zetting-serve:
+    build: ./services/serve-static/.
+    restart: always
+    ports:
+      - 9000
+    networks:
+      - zetting
 networks:
   zetting:
     driver: bridge

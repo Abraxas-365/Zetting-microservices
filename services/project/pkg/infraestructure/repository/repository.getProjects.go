@@ -2,12 +2,12 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"projects/pkg/core/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo/options"
 )
 
 /*get projects, document = owner or worker*/
@@ -17,13 +17,11 @@ func (r *mongoRepository) GetProjects(userId interface{}, document string, page 
 	collection := r.client.Database(r.database).Collection(r.collection)
 
 	var projects models.Projects
-	userObjectId, err := primitive.ObjectIDFromHex(userId.(string))
+	userIdObjectId, err := primitive.ObjectIDFromHex(userId.(string))
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(userObjectId, document, page)
-
-	filter := bson.M{document: bson.A{userObjectId}}
+	filter := bson.M{document: userIdObjectId}
 	options := options.Find()
 	options.SetLimit(20)
 	options.SetSkip((int64(page) - 1) * 20)

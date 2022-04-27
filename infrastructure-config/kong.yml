@@ -70,5 +70,19 @@ services:
        methods:
          - POST
          - GET
-         - UPDATE
+         - PUT
+       strip_path: true
+
+ - name: zetting-serve
+   host: zetting-serve
+   port: 9000
+   path: /api/static/app_default_images
+   routes:
+     - name: zetting-serve-service-routes
+       paths:
+         - /api/static/app_default_images/
+       methods:
+         - POST
+         - GET
+         - PUT
        strip_path: true

@@ -13,9 +13,9 @@ var (
 )
 
 type ProjectApplication interface {
-	CreateProject(newProject models.Project, userId interface{}) (interface{}, error)
+	CreateProject(newProject models.Project, userId interface{}) (models.Project, error)
 	GetProjects(userId interface{}, document string, page int) (models.Projects, error)
-	AddUserToProject(addUserData models.AddUserToProject, document string) error
+	AddUserToProject(userID interface{}, projectId interface{}, document string) error
 	GetProjectByProjectId(projectId interface{}) (models.Project, error)
 }
 type projectApplication struct {

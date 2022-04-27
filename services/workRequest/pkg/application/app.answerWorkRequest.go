@@ -13,10 +13,14 @@ func (s *workRequestApplication) AnswerWorkRequest(workRequest models.WorkReques
 		return err
 	}
 	//Safe the data via repository
-	if err := s.projectRepo.AnswerWorkRequest(workRequest); err != nil {
+	workRequest, err := s.projectRepo.AnswerWorkRequest(workRequest)
+	if err != nil {
 		return err
 	}
 	//sent to rabbitMQ
+	fmt.Println("PRojectId", workRequest.Project.ID)
+	workRequest.AnserWorkrequest()
+	fmt.Println("Work request answer: ", workRequest)
 	if err := s.mqpublisher.AnswerWorkRequest(workRequest, "WorkRequest", "anser_workrequest"); err != nil {
 		//TODO: do something with the error
 		fmt.Println("Rabbit consumer closed - critical Error")
