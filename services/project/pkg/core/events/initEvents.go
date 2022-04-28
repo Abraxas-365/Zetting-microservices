@@ -5,4 +5,5 @@ type Event interface {
 	Exchange() string
 	Routing() string
 }
+
 type Events []Event

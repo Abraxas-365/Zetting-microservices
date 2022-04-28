@@ -6,21 +6,16 @@ import (
 	"projects/pkg/core/models"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r *mongoRepository) IsProjectExist(newProject models.Project, userId interface{}) bool {
-	fmt.Println("--CreateProjectRepo--", newProject.Name, userId)
+func (r *mongoRepository) IsProjectExist(newProject models.Project) bool {
+	fmt.Println("--CreateProjectRepo--", newProject.Name)
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 
-	userIdObjectId, err := primitive.ObjectIDFromHex(userId.(string))
-	if err != nil {
-		return true
-	}
 	check := bson.M{}
-	filter := bson.M{"name": newProject.Name, "owners._id": userIdObjectId}
+	filter := bson.M{"name": newProject.Name, "owners._id": newProject.Owner}
 	if err := collection.FindOne(ctx, filter).Decode(&check); err != nil {
 		return false
 	}

@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func (h *workRequestHandler) GetWorkRequestsByProject(c *fiber.Ctx) error {
@@ -21,7 +22,10 @@ func (h *workRequestHandler) GetWorkRequestsByProject(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error())
 	}
 	status := c.Params("status")
-	projectId := c.Params("project_id")
+	projectId, err := uuid.Parse(c.Params("project_id"))
+	if err != nil {
+		return c.Status(500).SendString(err.Error())
+	}
 	workRequests, err := h.workRequestApplication.GetWorkRequests(projectId, status, page, number, "project._id")
 	if err != nil {
 		return c.Status(500).SendString(err.Error())

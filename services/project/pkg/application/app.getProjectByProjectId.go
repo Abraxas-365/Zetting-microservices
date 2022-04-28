@@ -1,8 +1,12 @@
 package application
 
-import "projects/pkg/core/models"
+import (
+	"projects/pkg/core/models"
 
-func (s *projectApplication) GetProjectByProjectId(projectId interface{}) (models.Project, error) {
+	"github.com/google/uuid"
+)
+
+func (s *projectApplication) GetProjectByProjectId(projectId uuid.UUID) (models.Project, error) {
 	project, err := s.projectRepo.GetProjectByProjectId(projectId)
 	if err != nil {
 		return models.Project{}, err

@@ -4,22 +4,19 @@ import (
 	"context"
 	"projects/pkg/core/models"
 
+	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r *mongoRepository) GetProjectByProjectId(projectId interface{}) (models.Project, error) {
+func (r *mongoRepository) GetProjectByProjectId(projectId uuid.UUID) (models.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
-	projectObjecId, err := primitive.ObjectIDFromHex(projectId.(string))
-	if err != nil {
-		return models.Project{}, err
-	}
 	var project models.Project
-	filter := bson.M{"_id": projectObjecId}
+	filter := bson.M{"_id": projectId}
 	if err := collection.FindOne(ctx, filter).Decode(&project); err != nil {
 		return models.Project{}, err
 	}
+
 	return project, nil
 }

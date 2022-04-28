@@ -1,10 +1,12 @@
 package application
 
 import (
+	"fmt"
 	"work-request/pkg/core/models"
 )
 
 func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkRequest) error {
+	fmt.Println("CreateWorkRequest")
 	if err := r.projectService.CanCreateWorkRequest(newWorkRequest); err != nil {
 		return err
 	}
@@ -13,7 +15,7 @@ func (r *workRequestApplication) CreateWorkRequest(newWorkRequest models.WorkReq
 	if err != nil {
 		return err
 	}
-	r.mqpublisher.NewWorkRequest(event)
+	r.mqpublisher.PublishEvent(event)
 	return nil
 
 }

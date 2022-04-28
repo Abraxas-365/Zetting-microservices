@@ -13,7 +13,7 @@ var (
 )
 
 type ProjectService interface {
-	CanCreateProject(project models.Project, userId interface{}) error
+	CanCreateProject(project models.Project) error
 }
 
 type projectService struct {

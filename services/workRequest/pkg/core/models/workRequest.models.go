@@ -3,6 +3,8 @@ package models
 import (
 	"errors"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 //TODO validate status
@@ -17,16 +19,24 @@ var (
 )
 
 type WorkRequest struct {
-	ID      interface{} `bson:"_id,omitempty" json:"id,omitempty"`
-	Owner   User        `bson:"owner" json:"owner,omitempty"`
-	Worker  User        `bson:"worker" json:"worker,omitemptyo"`
-	Project Project     `bson:"project" json:"project,omitempty"`
-	Status  string      `bson:"status" json:"status,omitempty"`
-	Created time.Time   `bson:"created_at" json:"created_at,omitempty"`
-	Updated time.Time   `bson:"updated_at" json:"updated_at,omitempty"`
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   User      `bson:"owner" json:"owner,omitempty"`
+	Worker  User      `bson:"worker" json:"worker,omitemptyo"`
+	Project Project   `bson:"project" json:"project,omitempty"`
+	Status  string    `bson:"status" json:"status,omitempty"`
+	Created time.Time `bson:"created_at" json:"created_at,omitempty"`
+	Updated time.Time `bson:"updated_at" json:"updated_at,omitempty"`
 }
 
 type WorkRequests []*WorkRequest
+
+func (wr *WorkRequest) New() WorkRequest {
+	wr.ID = uuid.New()
+	wr.Created = time.Now()
+	wr.Updated = time.Now()
+	wr.Status = "P"
+	return *wr
+}
 
 func (wr *WorkRequest) Validate() error {
 	switch wr.Status {

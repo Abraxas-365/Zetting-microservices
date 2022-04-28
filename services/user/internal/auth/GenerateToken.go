@@ -1,8 +1,11 @@
 package auth
 
-import "github.com/golang-jwt/jwt/v4"
+import (
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/google/uuid"
+)
 
-func GereteToken(email string, id interface{}) (string, error) {
+func GereteToken(email string, id uuid.UUID) (string, error) {
 
 	secret := "JWT_SECRET_KEY"
 	claims := jwt.MapClaims{

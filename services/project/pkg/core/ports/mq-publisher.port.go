@@ -1,10 +1,10 @@
 package ports
 
 import (
-	"work-request/pkg/core/events"
+	"projects/pkg/core/events"
 )
 
-type WorkRequestMQPublisher interface {
+type ProjectMQPublisher interface {
 	PublishEvent(events.Event) error
 	PublishEvents(events.Events) error
 }

@@ -8,7 +8,7 @@ import (
 	"work-request/pkg/core/events"
 )
 
-func (mq *mqPublisher) AnswerWorkRequest(event events.Event) error {
+func (mq *mqPublisher) PublishEvent(event events.Event) error {
 	fmt.Println(event.Name())
 	fmt.Println(event)
 

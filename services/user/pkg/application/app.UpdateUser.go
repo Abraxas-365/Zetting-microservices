@@ -3,9 +3,11 @@ package application
 import (
 	"fmt"
 	"user/pkg/core/models"
+
+	"github.com/google/uuid"
 )
 
-func (r *userApplication) UpdateUser(userDataToUpdate models.User, userId interface{}) error {
+func (r *userApplication) UpdateUser(userDataToUpdate models.User, userId uuid.UUID) error {
 
 	// userDataToUpdate, _ := r.userRepo.GetUserByEmail(email)
 	updateQuery := make(map[string]interface{})

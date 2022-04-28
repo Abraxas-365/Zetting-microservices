@@ -11,7 +11,7 @@ func (h *userHandler) CreateUser(c *fiber.Ctx) error {
 	if err := c.BodyParser(&newUser); err != nil {
 		return fiber.ErrBadRequest
 	}
-	user, token, err := h.userApplication.CreateUser(*newUser)
+	user, token, err := h.userApplication.CreateUser(newUser.New())
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

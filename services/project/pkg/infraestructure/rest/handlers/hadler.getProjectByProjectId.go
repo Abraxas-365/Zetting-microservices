@@ -1,10 +1,17 @@
 package handlers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+)
 
 func (h *projectHandler) GetProjectByProjectId(c *fiber.Ctx) error {
 
-	projectId := c.Params("id")
+	projectId, err := uuid.Parse(c.Params("id"))
+	if err != nil {
+		return c.Status(500).SendString(err.Error())
+	}
+
 	project, err := h.projectApplication.GetProjectByProjectId(projectId)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())

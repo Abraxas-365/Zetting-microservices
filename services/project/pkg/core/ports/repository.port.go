@@ -1,11 +1,16 @@
 package ports
 
-import "projects/pkg/core/models"
+import (
+	"projects/pkg/core/events"
+	"projects/pkg/core/models"
+
+	"github.com/google/uuid"
+)
 
 type ProjectRepository interface {
-	CreateProject(project models.Project, userId interface{}) (interface{}, error)
-	GetProjects(userId interface{}, document string, page int) (models.Projects, error)
-	GetProjectByProjectId(projectId interface{}) (models.Project, error)
-	AddUserToProject(userID interface{}, projectId interface{}, document string) error
-	IsProjectExist(newProject models.Project, userId interface{}) bool
+	CreateProject(project models.Project) (events.Event, error)
+	GetProjects(userId uuid.UUID, document string, page int) (models.Projects, error)
+	GetProjectByProjectId(projectId uuid.UUID) (models.Project, error)
+	AddUserToProject(userID uuid.UUID, projectId uuid.UUID, document string) (events.Event, error)
+	IsProjectExist(newProject models.Project) bool
 }

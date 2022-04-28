@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"work-request/internal/auth"
 	"work-request/pkg/core/models"
 
@@ -12,12 +13,18 @@ func (h *workRequestHandler) CreateWorkRequest(c *fiber.Ctx) error {
 	if err := c.BodyParser(&newWorkrequestData); err != nil {
 		return fiber.ErrBadRequest
 	}
+	fmt.Println(newWorkrequestData)
 	userTokenData, err := auth.ExtractTokenMetadata(c)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
 	newWorkrequestData.Owner.ID = userTokenData.ID
-	if err := h.workRequestApplication.CreateWorkRequest(*newWorkrequestData); err != nil {
+	// workRequest, err := newWorkrequestData.New()
+	// if err != nil {
+	// 	return c.Status(500).SendString(err.Error())
+	// }
+
+	if err := h.workRequestApplication.CreateWorkRequest(newWorkrequestData.New()); err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
 	return c.SendStatus(fiber.StatusOK)

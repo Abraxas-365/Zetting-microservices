@@ -16,7 +16,7 @@ func (h *projectHandler) CreateProject(c *fiber.Ctx) error {
 	if err := c.BodyParser(&createProjectData); err != nil {
 		return fiber.ErrBadRequest
 	}
-	newProject, err := h.projectApplication.CreateProject(*createProjectData, userTokenData.ID)
+	newProject, err := h.projectApplication.CreateProject(createProjectData.New(userTokenData.ID))
 	if err != nil {
 		return c.SendStatus(fiber.ErrConflict.Code)
 	}

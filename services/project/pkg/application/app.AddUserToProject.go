@@ -1,9 +1,10 @@
 package application
 
-func (s *projectApplication) AddUserToProject(userID interface{}, projectId interface{}, document string) error {
+import "github.com/google/uuid"
 
-	if err := s.projectRepo.AddUserToProject(userID, projectId, "workers"); err != nil {
+func (s *projectApplication) AddUserToProject(userID uuid.UUID, projectId uuid.UUID, document string) error {
 
+	if _, err := s.projectRepo.AddUserToProject(userID, projectId, "workers"); err != nil {
 		return err
 	}
 

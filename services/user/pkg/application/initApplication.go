@@ -5,6 +5,8 @@ import (
 	"user/pkg/core/models"
 	"user/pkg/core/ports"
 	"user/pkg/core/service"
+
+	"github.com/google/uuid"
 )
 
 var (
@@ -15,11 +17,11 @@ var (
 )
 
 type UserApplication interface {
-	UpdateUser(userDataToUpdate models.User, userId interface{}) error
+	UpdateUser(userDataToUpdate models.User, userId uuid.UUID) error
 	CreateUser(user models.User) (models.User, string, error)
 	LoginUser(email models.Email, password models.Password) (models.User, string, error)
 	IsUserExsist(email models.Email) error
-	GetUserById(userId interface{}) (models.UserPublic, error)
+	GetUserById(userId uuid.UUID) (models.UserPublic, error)
 }
 
 type userApplication struct {

@@ -2,35 +2,27 @@ package repository
 
 import (
 	"context"
+	"projects/pkg/core/events"
 
+	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r *mongoRepository) AddUserToProject(userID interface{}, projectId interface{}, document string) error {
+func (r *mongoRepository) AddUserToProject(userId uuid.UUID, projectId uuid.UUID, document string) (events.Event, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 
-	projectObjectId, err := primitive.ObjectIDFromHex(projectId.(string))
-	if err != nil {
-		return err
-	}
-
-	userToAddObjectId, err := primitive.ObjectIDFromHex(userID.(string))
-	if err != nil {
-		return err
-	}
 	//the data comes from a work reqeust
-	filter := bson.M{"_id": projectObjectId}
+	filter := bson.M{"_id": projectId}
 	update := bson.M{
 		"$push": bson.M{
-			document: userToAddObjectId,
+			document: userId,
 		},
 	}
 	if _, err := collection.UpdateOne(ctx, filter, update); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return nil, nil
 }

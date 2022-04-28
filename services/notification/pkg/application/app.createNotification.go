@@ -1,12 +1,14 @@
 package application
 
 import (
+	"fmt"
 	"notifications/pkg/core/models"
 )
 
 func (s *notificationApplication) CreateNotification(newNotification models.Notification) error {
 
 	if s.notificationRepo.IsNotificationExist(newNotification) {
+		fmt.Println("ERRORRRR notification ")
 		return ErrNotificationExists
 	}
 
@@ -18,7 +20,10 @@ func (s *notificationApplication) CreateNotification(newNotification models.Noti
 		newNotification.Message = "Is now part of your team"
 	}
 	if err := s.notificationRepo.CreateNotification(newNotification); err != nil {
+		fmt.Printf("Error creating notification")
+
 		return err
+
 	}
 	return nil
 

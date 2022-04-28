@@ -16,7 +16,7 @@ func (s *workRequestApplication) AnswerWorkRequest(workRequest models.WorkReques
 		return err
 	}
 	//sent to rabbitMQ
-	s.mqpublisher.AnswerWorkRequest(event)
+	s.mqpublisher.PublishEvent(event)
 
 	return nil
 
