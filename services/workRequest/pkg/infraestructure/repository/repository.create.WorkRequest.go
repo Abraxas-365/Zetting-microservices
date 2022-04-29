@@ -20,6 +20,7 @@ func (r *mongoRepository) CreateWorkRequest(newWorkRequest models.WorkRequest) (
 		Owner:   newWorkRequest.Owner,
 		Worker:  newWorkRequest.Worker,
 		Project: newWorkRequest.Project,
+		Status:  newWorkRequest.Status,
 	}, nil
 
 }

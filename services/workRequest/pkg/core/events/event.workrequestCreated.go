@@ -7,6 +7,7 @@ type WorkrequestCreated struct {
 	Owner   models.User    `bson:"owner" json:"owner,omitempty"`
 	Worker  models.User    `bson:"worker" json:"worker,omitemptyo"`
 	Project models.Project `bson:"project" json:"project,omitempty"`
+	Status  string         `bson:"status" json:"status,omitempty"`
 }
 
 func (w WorkrequestCreated) Name() string {

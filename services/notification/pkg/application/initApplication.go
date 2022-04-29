@@ -5,6 +5,8 @@ import (
 	"notifications/pkg/core/models"
 	"notifications/pkg/core/ports"
 	"notifications/pkg/core/service"
+
+	"github.com/google/uuid"
 )
 
 var (
@@ -15,8 +17,8 @@ var (
 
 type NotificationApplication interface {
 	CreateNotification(newNotification models.Notification) error
-	GetNotifications(userId interface{}, page int) (models.Notifications, error)
-	GetCompleteNotification(notificationId interface{}) (models.Notification, error)
+	GetNotifications(userId uuid.UUID, page int) (models.Notifications, error)
+	GetCompleteNotification(notificationId uuid.UUID) (models.Notification, error)
 }
 type notificationApplication struct {
 	notificationRepo    ports.NotificationRepository
