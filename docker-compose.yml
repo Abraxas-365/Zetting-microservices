@@ -60,8 +60,9 @@ services:
 
   zetting-user:
     environment:
+      MQ_URI: amqp://admin:admin@rabbitmq:5672/
       MONGODB_URI: mongodb://root:example@mongo:27017/
-    build: ./services/user/.
+    build: ./services/user-service/.
     restart: always
     ports:
       - 3000
@@ -93,7 +94,7 @@ services:
     environment:
       MQ_URI: amqp://admin:admin@rabbitmq:5672/
       MONGODB_URI: mongodb://root:example@mongo:27017/
-    build: ./services/project/.
+    build: ./services/projects-service/.
     restart: always
     ports:
       - 3001
@@ -114,7 +115,7 @@ services:
       MONGODB_URI: mongodb://root:example@mongo:27017/
       MQ_URI: amqp://admin:admin@rabbitmq:5672/
       MQ_CHANNEL_NAME: WorkRequests
-    build: ./services/notification/.
+    build: ./services/notifications-service/.
     restart: always
     ports:
       - 3002
@@ -135,7 +136,7 @@ services:
       MONGODB_URI: mongodb://root:example@mongo:27017/
       MQ_URI: amqp://admin:admin@rabbitmq:5672/
       MQ_CHANNEL_NAME: WorkRequests
-    build: ./services/workRequest/.
+    build: ./services/workRequest-service/.
     restart: always
     ports:
       - 3003
