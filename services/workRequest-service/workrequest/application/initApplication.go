@@ -10,7 +10,7 @@ import (
 
 type WorkRequestApplication interface {
 	CreateWorkRequest(workRequest models.WorkRequest) error
-	GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.WorkRequests, error)
+	GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.LookUpWorkRequests, error)
 	AnswerWorkRequest(workRequest uuid.UUID, workerId uuid.UUID, status models.Status) error
 }
 type workRequestApplication struct {

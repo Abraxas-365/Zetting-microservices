@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (r *workRequestApplication) GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.WorkRequests, error) {
+func (r *workRequestApplication) GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.LookUpWorkRequests, error) {
 
 	workRequests, err := r.projectRepo.GetWorkRequests(referenceId, status, page, number, document)
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 
 type WorkRequestRepository interface {
 	CreateWorkRequest(workRequest models.WorkRequest) (events.Event, error)
-	GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.WorkRequests, error)
+	GetWorkRequests(referenceId uuid.UUID, status string, page int, number int, document string) (models.LookUpWorkRequests, error)
 	AnswerWorkRequest(workRequest uuid.UUID, workerId uuid.UUID, status string) (events.Event, error)
 	IsWorkrequestExist(newWorkRequest models.WorkRequest) bool
 }
