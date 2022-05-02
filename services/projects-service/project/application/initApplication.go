@@ -16,9 +16,9 @@ var (
 
 type ProjectApplication interface {
 	CreateProject(newProject models.Project) (models.Project, error)
-	GetProjects(userId uuid.UUID, document string, page int) (models.Projects, error)
+	GetProjects(userId uuid.UUID, document string, page int) (models.LookupProjects, error)
 	AddUserToProject(user uuid.UUID, project uuid.UUID) error
-	GetProjectByProjectId(projectId uuid.UUID) (models.Project, error)
+	GetProjectByProjectId(projectId uuid.UUID) (models.LookupProject, error)
 }
 type projectApplication struct {
 	projectRepo        ports.ProjectRepository

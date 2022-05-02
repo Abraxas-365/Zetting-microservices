@@ -28,7 +28,7 @@ func (h *projectHandler) GetProjectsWorkingOn(c *fiber.Ctx) error {
 	}
 
 	page, _ := strconv.Atoi(c.Params("page"))
-	projects, err := h.projectApplication.GetProjects(userTokenData.ID, "workers._id", page)
+	projects, err := h.projectApplication.GetProjects(userTokenData.ID, "workers", page)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

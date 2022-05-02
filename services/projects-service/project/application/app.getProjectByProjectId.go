@@ -6,10 +6,10 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *projectApplication) GetProjectByProjectId(projectId uuid.UUID) (models.Project, error) {
+func (s *projectApplication) GetProjectByProjectId(projectId uuid.UUID) (models.LookupProject, error) {
 	project, err := s.projectRepo.GetProjectByProjectId(projectId)
 	if err != nil {
-		return models.Project{}, err
+		return models.LookupProject{}, err
 	}
 	return project, nil
 
