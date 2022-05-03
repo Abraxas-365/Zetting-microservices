@@ -6,11 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *notificationApplication) GetCompleteNotification(notificationId uuid.UUID) (models.Notification, error) {
+func (s *notificationApplication) GetCompleteNotification(notificationId uuid.UUID) (models.LookupNotification, error) {
 	//get the notification from the db
 	notification, err := s.notificationRepo.GetNotificationById(notificationId)
 	if err != nil {
-		return models.Notification{}, err
+		return models.LookupNotification{}, err
 	}
 	return notification, nil
 }

@@ -24,6 +24,7 @@ func (w *WorkRequest) ToNotification(msg string) models.Notification {
 		NotifierUser: w.Owner,
 		NotifiedUser: w.Worker,
 		WorkRequest:  w.ID,
+		Type:         "workrequest",
 		Project:      w.Project,
 		Created:      w.Created,
 		Updated:      time.Now(),

@@ -15,8 +15,8 @@ var (
 
 type NotificationApplication interface {
 	CreateNotification(newNotification models.Notification) error
-	GetNotifications(userId uuid.UUID, page int) (models.Notifications, error)
-	GetCompleteNotification(notificationId uuid.UUID) (models.Notification, error)
+	GetNotifications(userId uuid.UUID, page int) (models.LookupNotifications, error)
+	GetCompleteNotification(notificationId uuid.UUID) (models.LookupNotification, error)
 }
 type notificationApplication struct {
 	notificationRepo ports.NotificationRepository

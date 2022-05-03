@@ -13,6 +13,7 @@ import (
 
 var (
 	ErrConflict = errors.New("Allready exist")
+	ErrNotFound = errors.New("Not found")
 )
 
 type mongoRepository struct {

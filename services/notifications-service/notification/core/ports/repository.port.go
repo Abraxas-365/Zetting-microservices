@@ -8,6 +8,6 @@ import (
 
 type NotificationRepository interface {
 	CreateNotification(newNotification models.Notification) error
-	GetNotifications(userId uuid.UUID, page int) (models.Notifications, error)
-	GetNotificationById(notificationId uuid.UUID) (models.Notification, error)
+	GetNotifications(userId uuid.UUID, page int) (models.LookupNotifications, error)
+	GetNotificationById(notificationId uuid.UUID) (models.LookupNotification, error)
 }

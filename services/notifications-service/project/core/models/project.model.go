@@ -17,3 +17,5 @@ type Project struct {
 	Name  string    `bson:"name" json:"name,omitempty"`
 	Image string    `bson:"image" json:"image,omitempty"`
 }
+
+type Projects []*Project
