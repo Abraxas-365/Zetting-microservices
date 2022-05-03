@@ -7,5 +7,8 @@ func (r *userApplication) GetUsersByProfession(profession string, page int) (mod
 	if err != nil {
 		return nil, err
 	}
+	if users == nil {
+		return models.Users{}, nil
+	}
 	return users, nil
 }
