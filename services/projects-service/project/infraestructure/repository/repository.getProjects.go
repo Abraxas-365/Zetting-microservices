@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"projects/project/core/models"
 
 	"github.com/google/uuid"
@@ -16,7 +15,6 @@ func (r *mongoRepository) GetProjects(userId uuid.UUID, document string, page in
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 
-	fmt.Println("uuid", userId.String())
 	lookupProjects := models.LookupProjects{}
 	optionsLimit := bson.D{{Key: "$limit", Value: 20}}
 	optionsSkip := bson.D{{Key: "$skip", Value: page - 1}}
