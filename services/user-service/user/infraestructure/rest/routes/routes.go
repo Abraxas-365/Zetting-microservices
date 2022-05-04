@@ -8,7 +8,6 @@ import (
 )
 
 func UsersRoute(app *fiber.App, handler handlers.UserHandler) {
-	/*SERVE*/
 	users := app.Group("/api/users")
 	/*Login user*/
 	users.Post("/login", handler.LoginUser)

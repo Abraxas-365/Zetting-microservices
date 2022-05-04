@@ -21,7 +21,7 @@ type UserApplication interface {
 	CreateUser(user models.User) (models.User, string, error)
 	LoginUser(email models.Email, password models.Password) (models.User, string, error)
 	IsUserExsist(email models.Email) error
-	GetUserById(userId uuid.UUID) (models.UserPublic, error)
+	GetUserById(userId uuid.UUID) (models.User, error)
 }
 
 type userApplication struct {

@@ -18,5 +18,5 @@ func (h *userHandler) LoginUser(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"user": user, "token": token})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"user": user.ExposeToPublic(), "token": token})
 }

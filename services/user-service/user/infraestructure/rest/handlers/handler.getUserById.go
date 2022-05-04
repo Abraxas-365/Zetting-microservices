@@ -15,5 +15,5 @@ func (h *userHandler) GetUserById(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	return c.Status(fiber.StatusOK).JSON(user)
+	return c.Status(fiber.StatusOK).JSON(user.ExposeToPublic())
 }

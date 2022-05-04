@@ -12,5 +12,5 @@ type UserRepository interface {
 	CreateUser(user models.User) (events.Event, error)
 	GetUserByEmail(email models.Email) (models.User, error)
 	IsUserExsist(email models.Email) bool
-	GetUserById(userId uuid.UUID) (models.UserPublic, error)
+	GetUserById(userId uuid.UUID) (models.User, error)
 }

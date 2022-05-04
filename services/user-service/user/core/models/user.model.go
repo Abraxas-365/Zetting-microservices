@@ -26,6 +26,7 @@ type User struct {
 	Updated     time.Time  `bson:"updated_at" json:"updated_at,omitempty"`
 }
 
+//TODO change the user to UserPublic in create user functions
 type UserPublic struct {
 	ID          uuid.UUID  `bson:"_id,omitempty" json:"id"`
 	Name        string     `bson:"name" json:"name,omitempty"`
@@ -33,8 +34,6 @@ type UserPublic struct {
 	Profession  Profession `bson:"profession" json:"profession,omitempty"`
 	Features    Features   `bson:"features" json:"features,omitempty"`
 	Verified    bool       `bson:"verified" json:"verified,omitempty"`
-	Created     time.Time  `bson:"created_at" json:"created_at,omitempty"`
-	Updated     time.Time  `bson:"updated_at" json:"updated_at,omitempty"`
 }
 
 func (u *User) New() User {
@@ -43,6 +42,7 @@ func (u *User) New() User {
 	u.Updated = time.Now()
 	u.Features.Skills = []string{}
 	u.Verified = false
+	u.PerfilImage = "/noPerfil.png"
 	return *u
 }
 func (u *User) Validate() error {
@@ -56,7 +56,13 @@ func (u *User) Validate() error {
 	return nil
 }
 
-func (u *User) ExposeToPublic() {
-	u.Password = ""
-	u.Contact = Contact{}
+func (u *User) ExposeToPublic() UserPublic {
+	return UserPublic{
+		ID:          u.ID,
+		Name:        u.Name,
+		PerfilImage: u.PerfilImage,
+		Profession:  u.Profession,
+		Features:    u.Features,
+		Verified:    u.Verified,
+	}
 }
