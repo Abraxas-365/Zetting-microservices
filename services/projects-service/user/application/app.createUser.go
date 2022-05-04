@@ -3,7 +3,7 @@ package application
 import "projects/user/core/models"
 
 func (a *userApplication) CreateUser(user models.User) error {
-	//TODO ensure what happend when user already exist and mq reenquee the error
+	//TODO Check if user exist and if exist return nil
 	if err := a.repo.CreateUser(user); err != nil {
 		return err
 	}
