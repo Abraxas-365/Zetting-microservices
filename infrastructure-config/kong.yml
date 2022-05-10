@@ -17,14 +17,14 @@ services:
          - UPDATE
        strip_path: true
 
- - name: zetting-user-filters-search
-   host: zetting-user-filters-search
-   port: 3006
-   path: /api/users-search
+ - name: zetting-actor
+   host: zetting-actor
+   port: 5001
+   path: /api/actor
    routes:
-     - name: zetting-user-filters-search-routes
+     - name: zetting-actor-routes
        paths:
-         - /api/users-search/
+         - /api/actor/
        methods:
          - POST
          - GET

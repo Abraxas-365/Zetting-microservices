@@ -99,17 +99,6 @@ services:
       - tcp://rabbitmq:15672
     command: ./main
 
-  zetting-user-filters-search:
-    environment:
-      MONGODB_URI: mongodb://root:example@mongo:27017/
-    build: ./services/user-filters-and-searchs/.
-    restart: always
-    ports:
-      - 3006
-    depends_on:
-      - mongo
-    networks:
-      - zetting
 
   zetting-project:
     environment:
