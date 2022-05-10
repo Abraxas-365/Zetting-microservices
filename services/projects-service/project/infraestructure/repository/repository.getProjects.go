@@ -18,9 +18,9 @@ func (r *mongoRepository) GetProjects(userId uuid.UUID, document string, page in
 	lookupProjects := models.LookupProjects{}
 	optionsLimit := bson.D{{Key: "$limit", Value: 20}}
 	optionsSkip := bson.D{{Key: "$skip", Value: page - 1}}
-	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: "owner", Value: userId}}}}
+	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: document, Value: userId}}}}
 	lookupWorkers := bson.D{{Key: "$lookup", Value: bson.D{{Key: "from", Value: "ProjectUsers"}, {Key: "localField", Value: "workers"}, {Key: "foreignField", Value: "_id"}, {Key: "as", Value: "workers"}}}}
-	lookupOwner := bson.D{{Key: "$lookup", Value: bson.D{{Key: "from", Value: "ProjectUsers"}, {Key: "localField", Value: "owner"}, {Key: "foreignField", Value: "_id"}, {Key: "as", Value: "owner"}}}}
+	lookupOwner := bson.D{{Key: "$lookup", Value: bson.D{{Key: "from", Value: "ProjectUsers"}, {Key: "localField", Value: document}, {Key: "foreignField", Value: "_id"}, {Key: "as", Value: document}}}}
 	unwindWorkers := bson.D{{Key: "$unwind", Value: bson.D{{Key: "path", Value: "$workers"}, {Key: "preserveNullAndEmptyArrays", Value: true}}}}
 	unwindOwner := bson.D{{Key: "$unwind", Value: bson.D{{Key: "path", Value: "$owner"}, {Key: "preserveNullAndEmptyArrays", Value: false}}}}
 
