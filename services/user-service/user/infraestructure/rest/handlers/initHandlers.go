@@ -11,6 +11,7 @@ type UserHandler interface {
 	LoginUser(c *fiber.Ctx) error
 	CreateUser(c *fiber.Ctx) error
 	GetUserById(c *fiber.Ctx) error
+	IsEmailInDb(c *fiber.Ctx) error
 }
 type userHandler struct {
 	userApplication application.UserApplication

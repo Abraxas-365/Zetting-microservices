@@ -7,20 +7,6 @@ var (
 	ErrDescriptionTooLong = errors.New("Description too long")
 )
 
-type Profession struct {
-	Name        string `json:"name,omitempty"`
-	Price       int    `json:"price,omitempty"`
-	Description string `json:"description,omitempty"`
-}
-
-func (p *Profession) Validate() error {
-	if len(p.Description) <= 100 {
-		return ErrDescriptionTooLong
-	}
-	// TODO: validate mode things
-	return nil
-}
-
 /*EMAIL*/
 type Email string
 

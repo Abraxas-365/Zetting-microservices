@@ -6,7 +6,6 @@ import (
 )
 
 func (a *userApplication) CreateUser(user models.User) (models.User, string, error) {
-
 	if err := a.userService.CanCreateUser(user); err != nil {
 		return models.User{}, "", err
 	}

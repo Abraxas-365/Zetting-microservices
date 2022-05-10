@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "github.com/arsmn/fiber-swagger/v2"
 	"fmt"
 	"os"
 	"user/internal/rabbit"

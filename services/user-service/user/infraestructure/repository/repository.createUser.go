@@ -19,5 +19,8 @@ func (r *mongoRepository) CreateUser(user models.User) (events.Event, error) {
 		ID:          user.ID,
 		PerfilImage: user.PerfilImage,
 		UserName:    user.Name,
+		Gender:      user.Gender,
+		Age:         user.Age,
+		Profession:  user.Profession,
 	}, nil
 }
