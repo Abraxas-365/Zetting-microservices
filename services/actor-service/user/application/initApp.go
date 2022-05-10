@@ -16,6 +16,7 @@ var (
 type UserApplication interface {
 	CreateUser(user models.User) error
 	UpdateUser(updated models.User, userId uuid.UUID) error
+	GetUsers() (models.Users, error)
 }
 type userApplication struct {
 	repo ports.UserRepository

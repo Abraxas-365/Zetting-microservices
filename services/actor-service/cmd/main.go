@@ -6,6 +6,8 @@ import (
 	"actor-service/user/infraestructure/mqconsumer/handlers"
 	"actor-service/user/infraestructure/mqconsumer/routes"
 	"actor-service/user/infraestructure/repository"
+	"actor-service/user/infraestructure/rest/handels"
+	"actor-service/user/infraestructure/rest/routes"
 	"fmt"
 	"os"
 
@@ -30,10 +32,10 @@ func main() {
 
 	//MQRoutes
 	mqRoutes.ConsumerRoutes(mq, UserMQHandler)
-	// handler := handlers.NewUserHandler(application)
+	handler := handlers.NewUserHandler(application)
 	app := fiber.New()
 	app.Use(logger.New())
-	// routes.UsersRoute(app, handler) //User routes
+	routes.UsersRoute(app, handler) //User routes
 
 	app.Listen(":5001")
 }
