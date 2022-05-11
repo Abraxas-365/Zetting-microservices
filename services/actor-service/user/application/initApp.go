@@ -17,6 +17,7 @@ type UserApplication interface {
 	CreateUser(user models.User) error
 	UpdateUser(updated models.User, userId uuid.UUID) error
 	GetUsers(page int) (models.Users, error)
+	FilterUsers(filtro models.Filter, page int) (models.Users, error)
 }
 type userApplication struct {
 	repo ports.UserRepository

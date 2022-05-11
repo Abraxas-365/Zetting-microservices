@@ -10,4 +10,5 @@ type UserRepository interface {
 	UpdateUser(query interface{}, userId uuid.UUID) error
 	CreateUser(user models.User) error
 	GetUsers(page int) (models.Users, error)
+	FilterUsers(filter models.Filter, page int) (models.Users, error)
 }

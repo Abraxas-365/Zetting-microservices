@@ -12,13 +12,13 @@ func (p Profession) Validate() bool {
 
 /*Features obj*/
 type Features struct {
-	Height     int      `json:"height,omitempty"`
-	Body       string   `json:"body,omitempty"`
-	Skin       string   `json:"skin,omitempty"`
-	HairType   string   `json:"hair_type,omitempty"`
-	HairZise   string   `json:"hair_zise,omitempty"`
-	Skills     []string `json:"skills,omitempty"`
-	FacialHair string   `json:"facial_hair,omitempty"`
-	HairColor  string   `json:"hair_color,omitempty"`
-	EyeColor   string   `json:"eye_color,omitempty"`
+	Height     int      `bson:"height" json:"height,omitempty"`
+	Body       string   `bson:"body" json:"body,omitempty"`
+	Skin       string   `bson:"skin" json:"skin,omitempty"`
+	HairType   string   `bson:"hair_type" json:"hair_type,omitempty"`
+	HairZise   string   `bson:"hair_zise" json:"hair_zise,omitempty"`
+	Skills     []string `bson:"skills" json:"skills,omitempty"`
+	FacialHair string   `bson:"facial_hair" json:"facial_hair,omitempty"`
+	HairColor  string   `bson:"hair_color" json:"hair_color,omitempty"`
+	EyeColor   string   `bson:"eye_color" json:"eye_color,omitempty"`
 }

@@ -9,6 +9,7 @@ import (
 type UserHandler interface {
 	UpdateUser(c *fiber.Ctx) error
 	GetUsers(c *fiber.Ctx) error
+	FilterUsers(c *fiber.Ctx) error
 }
 type userHandler struct {
 	userApplication application.UserApplication

@@ -6,8 +6,8 @@ type User struct {
 	ID          uuid.UUID  `bson:"_id,omitempty" json:"id"`
 	Name        string     `bson:"name" json:"name,omitempty"`
 	PerfilImage string     `bson:"perfil_image" json:"perfil_image,omitempty"`
-	Gender      string     `json:"gender,omitempty"`
-	Age         int        `json:"age,omitempty"`
+	Gender      string     `bson:"gender" json:"gender,omitempty"`
+	Age         int        `bson:"age" json:"age,omitempty"`
 	Features    Features   `bson:"features" json:"features,omitempty"`
 	Description string     `bson:"description" json:"description,omitempty"`
 	Profession  Profession `bson:"profession" json:"profession,omitempty"`
