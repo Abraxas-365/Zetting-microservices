@@ -12,5 +12,5 @@ func UsersRoute(app *fiber.App, handler handlers.UserHandler) {
 	/*update user*/
 	users.Put("/update", auth.JWTProtected(), handler.UpdateUser)
 	/*get all users*/
-	users.Get("/", handler.GetUsers)
+	users.Get("/page=:page", handler.GetUsers)
 }

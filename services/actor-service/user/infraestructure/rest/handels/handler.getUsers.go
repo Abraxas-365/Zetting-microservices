@@ -1,9 +1,19 @@
 package handlers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"strconv"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func (h *userHandler) GetUsers(c *fiber.Ctx) error {
-	users, err := h.userApplication.GetUsers()
+
+	page, err := strconv.Atoi(c.Params("page", "1"))
+	if err != nil {
+		return c.Status(500).SendString(err.Error())
+	}
+
+	users, err := h.userApplication.GetUsers(page)
 	if err != nil {
 		return c.Status(500).SendString(err.Error())
 	}

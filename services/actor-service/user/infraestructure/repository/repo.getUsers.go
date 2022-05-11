@@ -5,14 +5,19 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *mongoRepository) GetUsers() (models.Users, error) {
+func (r *mongoRepository) GetUsers(page int) (models.Users, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 	collection := r.client.Database(r.database).Collection(r.collection)
 	users := models.Users{}
-	cur, err := collection.Find(ctx, bson.D{})
+	options := options.Find()
+	options.SetLimit(20)
+	options.SetSkip(20 * (int64(page) - 1))
+
+	cur, err := collection.Find(ctx, bson.D{}, options)
 	if err != nil {
 		return nil, err
 	}
