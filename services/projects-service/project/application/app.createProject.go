@@ -15,6 +15,7 @@ func (s *projectApplication) CreateProject(newProject models.Project) (models.Pr
 		return models.Project{}, err
 	}
 	s.projectMQPublisher.PublishEvent(event)
+	s.userApp.AddProjectCount(newProject.Owner)
 
 	return newProject, nil
 

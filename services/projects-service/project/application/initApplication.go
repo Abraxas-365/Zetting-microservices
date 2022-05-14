@@ -5,6 +5,7 @@ import (
 	"projects/project/core/models"
 	"projects/project/core/ports"
 	"projects/project/core/service"
+	userApp "projects/user/application"
 
 	"github.com/google/uuid"
 )
@@ -24,13 +25,18 @@ type projectApplication struct {
 	projectRepo        ports.ProjectRepository
 	projectMQPublisher ports.ProjectMQPublisher
 	projectService     service.ProjectService
+	userApp            userApp.UserApplication
 }
 
-func NewProjectApplication(projectRepo ports.ProjectRepository, mqPublisher ports.ProjectMQPublisher, projectService service.ProjectService) ProjectApplication {
+func NewProjectApplication(projectRepo ports.ProjectRepository,
+	mqPublisher ports.ProjectMQPublisher,
+	projectService service.ProjectService,
+	userApp userApp.UserApplication) ProjectApplication {
 	return &projectApplication{
 		projectRepo,
 		mqPublisher,
 		projectService,
+		userApp,
 	}
 
 }

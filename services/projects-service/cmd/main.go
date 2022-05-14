@@ -9,11 +9,13 @@ import (
 	projectMQPublisher "projects/project/infraestructure/mqueue/publisher"
 	projectRepo "projects/project/infraestructure/repository"
 	projectRestHandler "projects/project/infraestructure/rest/handlers"
-	"projects/project/infraestructure/rest/routes"
+	projectRoutes "projects/project/infraestructure/rest/routes"
 	userApp "projects/user/application"
 	userMQHandler "projects/user/infraestructure/mqueue/consumer/handlers"
 	userMQRoutes "projects/user/infraestructure/mqueue/consumer/routes"
 	userRepo "projects/user/infraestructure/repository"
+	userRestHandler "projects/user/infraestructure/rest/handlers"
+	userRoutes "projects/user/infraestructure/rest/routes"
 	workrequestApp "projects/workrequest/application"
 	workrequestMQHandler "projects/workrequest/infraestructure/mqueue/consumer/handlers"
 	workrequestMQRoutes "projects/workrequest/infraestructure/mqueue/consumer/routes"
@@ -44,8 +46,8 @@ func main() {
 	ProjectService := projectService.NewProjectService(Projectrepo)
 
 	//Applications
-	ProjectApplication := projectApp.NewProjectApplication(Projectrepo, ProjectMQPublisher, ProjectService)
 	UserApplication := userApp.NewUserApplication(UserRepo)
+	ProjectApplication := projectApp.NewProjectApplication(Projectrepo, ProjectMQPublisher, ProjectService, UserApplication)
 	WorkRequestApplication := workrequestApp.NewWorkRequestApplication(ProjectApplication)
 
 	//MQHandlers
@@ -58,10 +60,13 @@ func main() {
 
 	//Rest
 	// RestHandler
-	ProjectResthandlers := projectRestHandler.NewProjectHandler(ProjectApplication)
+	ProjectRestHandlers := projectRestHandler.NewProjectHandler(ProjectApplication)
+	UserRestHandlers := userRestHandler.NewUserHandler(UserApplication)
 	app := fiber.New()
 	app.Use(logger.New())
-	routes.ProjectsRoute(app, ProjectResthandlers)
+	projectRoutes.ProjectsRoute(app, ProjectRestHandlers)
+	userRoutes.UserRoute(app, UserRestHandlers)
+
 	fmt.Println("inicando en puerto 3000")
 	app.Listen(":3001")
 
