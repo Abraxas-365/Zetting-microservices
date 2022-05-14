@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (a userApplication) GetUserById(userId uuid.UUID) (models.User, error) {
+func (a *userApplication) GetUserById(userId uuid.UUID) (models.User, error) {
 	user, err := a.userRepo.GetUserById(userId)
 	if err != nil {
 		return models.User{}, err
