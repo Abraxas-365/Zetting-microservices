@@ -32,6 +32,7 @@ type UserPublic struct {
 	ID          uuid.UUID `bson:"_id,omitempty" json:"id"`
 	Name        string    `bson:"name" json:"name,omitempty"`
 	PerfilImage string    `bson:"perfil_image" json:"perfil_image,omitempty"`
+	Profession  string    `bson:"profession" json:"profession,omitempty"`
 	Verified    bool      `bson:"verified" json:"verified,omitempty"`
 	Gender      string    `bson:"gender" json:"gender,omitempty"`
 	Age         int       `bson:"age" json:"age,omitempty"`
@@ -60,6 +61,7 @@ func (u *User) ExposeToPublic() UserPublic {
 	return UserPublic{
 		ID:          u.ID,
 		Name:        u.Name,
+		Profession:  u.Profession,
 		PerfilImage: u.PerfilImage,
 		Gender:      u.Gender,
 		Age:         u.Age,
