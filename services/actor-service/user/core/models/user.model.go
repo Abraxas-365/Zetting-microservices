@@ -9,7 +9,7 @@ type User struct {
 	Gender      string     `bson:"gender" json:"gender,omitempty"`
 	Age         int        `bson:"age" json:"age,omitempty"`
 	Features    Features   `bson:"features" json:"features,omitempty"`
-	Description string     `bson:"description" json:"description,omitempty"`
+	Description string     `bson:"description" json:"description"`
 	Profession  Profession `bson:"profession" json:"profession,omitempty"`
 }
 

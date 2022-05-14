@@ -2,7 +2,7 @@ package routes
 
 import (
 	"actor-service/internal/auth"
-	"actor-service/user/infraestructure/rest/handels"
+	handlers "actor-service/user/infraestructure/rest/handels"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -13,6 +13,8 @@ func UsersRoute(app *fiber.App, handler handlers.UserHandler) {
 	users.Put("/update", auth.JWTProtected(), handler.UpdateUser)
 	/*get all users*/
 	users.Get("/page=:page", handler.GetUsers)
-
+	/*get user with filters*/
 	users.Get("/filter/page=:page", handler.FilterUsers)
+	/*get user by id*/
+	users.Get("/id=:id", handler.GetUserById)
 }

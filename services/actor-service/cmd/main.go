@@ -3,10 +3,10 @@ package main
 import (
 	"actor-service/internal/rabbit"
 	"actor-service/user/application"
-	"actor-service/user/infraestructure/mqconsumer/handlers"
-	"actor-service/user/infraestructure/mqconsumer/routes"
+	mqHandler "actor-service/user/infraestructure/mqconsumer/handlers"
+	mqRoutes "actor-service/user/infraestructure/mqconsumer/routes"
 	"actor-service/user/infraestructure/repository"
-	"actor-service/user/infraestructure/rest/handels"
+	handlers "actor-service/user/infraestructure/rest/handels"
 	"actor-service/user/infraestructure/rest/routes"
 	"fmt"
 	"os"
