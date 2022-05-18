@@ -1,0 +1,52 @@
+* Design Document Zetting
+
+** OverWiew
+
+*** Stakeholder
+- Luis Fernando Miranda (developer)
+
+*** Resumen
+
+Zetting is a social network for Artist and Audiovisuals
+
+*** functions
+1) zetting will allow them to show their professional portafolio with a personalize perfil template by profession
+
+2) in zetting Project creator will be able to create projects , find and hire the perfect professional for the job threw filters
+
+3) manage all the project threw the app:
+   - chats
+   - files
+   - etc
+4) payment threw the app
+
+
+** Tecnical details
+
+*** Architecture : microservices
+
+**** Why?/Pros
+1) we want to advance fast:
+   - When new developers start work on the project we want them to start working right away, with microservices they dont neet to undestand the hole application
+     neither the hole project.
+
+2) we want to be able to change fast
+   - This is a startup so we need to evolve fast , and new features could be require in any moment
+
+**** Cons
+1) Hard to monitory
+2) Hard testing and documentation:
+   - We will implement an standarize schema for documentation and use "DocXas"
+
+
+*** Infraestructure
+**** Rest
+Rest will be implement for the front end to comunicate with de microservices, only if 100% necesary threw microservices
+**** Message driven
+the primary way of comunication threw services will be threw avents/messages/commands:
+
+- pros:
+  - less couple
+  - assyncronus
+- cons:
+  - hard to documentate and monitoring
