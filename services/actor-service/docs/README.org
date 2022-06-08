@@ -1,0 +1,55 @@
+* Actor service
+
+** Models
+- User
+#+begin_src go
+//Actor
+  type User struct {
+      ID          uuid.UUID  `bson:"_id,omitempty" json:"id"`
+      Name        string     `bson:"name" json:"name,omitempty"`
+      PerfilImage string     `bson:"perfil_image" json:"perfil_image,omitempty"`
+      Gender      string     `bson:"gender" json:"gender,omitempty"`
+      Age         int        `bson:"age" json:"age,omitempty"`
+      Features    Features   `bson:"features" json:"features,omitempty"`
+      Description string     `bson:"description" json:"description"`
+      Profession  Profession `bson:"profession" json:"profession,omitempty"`
+  }
+#+end_src
+
+** Rest Handlers
+
+*** Get Users
+- method: Get
+- route: /api/actor/page=<num>
+
+*** Filter Actors
+- method: Get
+- route: /api/actor/filter/page=<num>
+- params:
+#+begin_src go
+type Filter struct {
+    Gender   string   `bson:"gender" json:"gender,omitempty"`
+    AgeMax   int      `bson:"age_max" json:"age_max,omitempty"`
+    AgeMin   int      `bson:"age_min" json:"age_min,omitempty"`
+    Features Features `bson:"features" json:"features,omitempty"`
+}
+type Features struct {
+	Height     int      `bson:"height" json:"height,omitempty"`
+	Body       string   `bson:"body" json:"body,omitempty"`
+	Skin       string   `bson:"skin" json:"skin,omitempty"`
+	HairType   string   `bson:"hair_type" json:"hair_type,omitempty"`
+	HairZise   string   `bson:"hair_zise" json:"hair_zise,omitempty"`
+	Skills     []string `bson:"skills" json:"skills,omitempty"`
+	FacialHair string   `bson:"facial_hair" json:"facial_hair,omitempty"`
+	HairColor  string   `bson:"hair_color" json:"hair_color,omitempty"`
+	EyeColor   string   `bson:"eye_color" json:"eye_color,omitempty"`
+}
+#+end_src
+
+*** Get Actor by id
+- method: Get
+- route: /api/actor/id=<user_id>
+
+** Message Queue Handler
+
+*** User Created
