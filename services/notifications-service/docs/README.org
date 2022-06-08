@@ -1,0 +1,90 @@
+* Notification service
+
+** Models
+
+- Notification
+  #+begin_src go
+type Notification struct {
+	ID           uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	NotifiedUser uuid.UUID `bson:"notified" json:"notified,omitempty"`
+	NotifierUser uuid.UUID `bson:"notifier" json:"notifier,omitempty"`
+	WorkRequest  uuid.UUID `bson:"workrequest " json:"workrequest,omitempty"` //this will ommit if it ist a work request
+	Project      uuid.UUID `bson:"project" json:"project,omitempty"`          //this will ommit if it ist a work request
+	Type         string    `bson:"type" json:"type,omitempty"`
+	Read         bool      `bson:"is_read"  json:"is_read,omitempty"`
+	Message      string    `bson:"message" json:"message,omitempty"`
+	Created      time.Time `bson:"created_at" json:"created_at,omitempty"`
+	Updated      time.Time `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
+
+type LookupNotification struct {
+	ID           uuid.UUID      `bson:"_id,omitempty" json:"id,omitempty"`
+	NotifiedUser user.User      `bson:"notified" json:"notified,omitempty"`
+	NotifierUser user.User      `bson:"notifier" json:"notifier,omitempty"`
+	Project      models.Project `bson:"project" json:"project,omitempty"`          //this will ommit if it ist a work request
+	WorkRequest  uuid.UUID      `bson:"workrequest " json:"workrequest,omitempty"` //this will ommit if it ist a work request
+	Type         string         `bson:"type" json:"type,omitempty"`
+	Read         bool           `bson:"is_read"  json:"is_read,omitempty"`
+	Message      string         `bson:"message" json:"message,omitempty"`
+	Created      time.Time      `bson:"created_at" json:"created_at,omitempty"`
+	Updated      time.Time      `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
+  #+end_src
+
+- User
+  #+begin_src go
+type User struct {
+	ID    uuid.UUID `bson:"_id" json:"id,omitempty"`
+	Name  string    `bson:"name" json:"name,omitempty"`
+	Image string    `bson:"perfil_image" json:"perfil_image,omitempty"`
+}
+
+  #+end_src
+
+- Project
+  #+begin_src go
+type Project struct {
+	ID    uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Name  string    `bson:"name" json:"name,omitempty"`
+	Image string    `bson:"image" json:"image,omitempty"`
+}
+  #+end_src
+
+- Workrequest
+  #+begin_src go
+type WorkRequest struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner,omitempty" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker,omitempty" json:"worker,omitempty"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+	Status  string    `bson:"status" json:"status,omitempty"`
+	Created time.Time `bson:"created_at" json:"created_at,omitempty"`
+}
+  #+end_src
+
+
+** Rest Handlers
+
+
+*** Get Notification by id
+- Method: Get
+- Route:/api/notification/id:<id>
+
+*** Get all Notifications
+- Method: Get
+- Route:/api/notification/page:<num>
+
+
+
+** Message Queue Handlers
+
+*** Project Created
+- source: project service
+
+*** User Created
+- source: user service
+
+*** workrequest Created
+- source: workrequest service

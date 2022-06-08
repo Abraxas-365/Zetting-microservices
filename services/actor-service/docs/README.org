@@ -53,3 +53,4 @@ type Features struct {
 ** Message Queue Handler
 
 *** User Created
+- handler for when a user is created on the user service

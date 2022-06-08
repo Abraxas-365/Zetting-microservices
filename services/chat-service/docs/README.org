@@ -1,0 +1,57 @@
+* CHAT
+
+** OverWiew
+
+*** Stakeholder
+- Luis Fernando Miranda (developer)
+
+*** Resumen
+
+Chat for all the members of a project
+
+*** functions
+
+1) goup chat for Project (only if the project is active)
+
+2) individual chats , but for members of a project (only if the project is active)
+
+3) can send documents
+
+
+
+** Tecnical details
+
+*** Schema
+
+- When new project is created a new room will be created
+- When user of a project room whith other member chat will be created
+- When project finish chat will change status to inactive (project chat and all the chats of the project)
+
+1) Room
+  - a room for project with all the members
+  - a room for 2 chats
+
+#+begin_src json
+  {
+      "_id":uuid,
+      "project":project.uuid,
+      "users":[]user.uuid
+      "active":bool,
+      "creted":time
+  }
+#+end_src
+
+1) Chat message
+   - if user is in room -> the reciver could be a user
+   - reciver narlamy whill be the room
+   - get all the message for room xxx
+   - to send c=message check if room avive is true
+
+ #+begin_src json
+       {
+           "_id":uuid,
+           "room":room.uuid
+           "sender": user.uuid,
+           "reciver": user.uuid or room,
+       }
+     #+end_src

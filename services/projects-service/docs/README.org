@@ -1,0 +1,76 @@
+* Project Service
+
+
+** Models
+
+- Project
+  #+begin_src go
+type Project struct {
+	ID           uuid.UUID    `bson:"_id,omitempty" json:"id"`
+	Name         Name         `bson:"name" json:"name,omitempty"`
+	Image        string       `bson:"image" json:"image,omitempty"`
+	Description  string       `bson:"description" json:"description,omitempty"`
+	Owner        uuid.UUID    `bson:"owner" json:"owner"`
+	Workers      []*uuid.UUID `bson:"workers" json:"workers"`
+	Color        string       `bson:"color" json:"color,omitempty"`
+	DateStarted  string       `bson:"date_started" json:"date_started,omitempty"`
+	DateFinished string       `bson:"date_finished" json:"date_finished,omitempty"`
+	Created      time.Time    `bson:"created_at" json:"created_at,omitempty"`
+	Updated      time.Time    `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
+
+type LookupProject struct {
+	ID           uuid.UUID  `bson:"_id,omitempty" json:"id"`
+	Name         Name       `bson:"name" json:"name,omitempty"`
+	Image        string     `bson:"image" json:"image,omitempty"`
+	Description  string     `bson:"description" json:"description,omitempty"`
+	Owner        user.User  `bson:"owner" json:"owner"`
+	Workers      user.Users `bson:"workers" json:"workers"`
+	Color        string     `bson:"color" json:"color,omitempty"`
+	DateStarted  string     `bson:"date_started" json:"date_started,omitempty"`
+	DateFinished string     `bson:"date_finished" json:"date_finished,omitempty"`
+	Created      time.Time  `bson:"created_at" json:"created_at,omitempty"`
+	Updated      time.Time  `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
+  #+end_src
+
+- User
+#+begin_src go
+type User struct {
+	ID           uuid.UUID `bson:"_id" json:"id,omitempty"`
+	Name         string    `bson:"name" json:"name,omitempty"`
+	Image        string    `bson:"perfil_image" json:"perfil_image,omitempty"`
+	ProjectCount int       `bson:"projects_count" json:"projects_count"`
+}
+#+end_src
+
+- Workrequest
+#+begin_src go
+type WorkRequest struct {
+	ID      uuid.UUID `json:"id,omitempty"`
+	Worker  uuid.UUID `json:"worker,omitempty"`
+	Project uuid.UUID `json:"project,omitempty"`
+}
+#+end_src
+
+
+** Rest handlers
+
+*** Create Project
+- Method: Post
+- Route: /api/projects/new
+- Params: Model.Project
+
+*** Get My Projects
+- Method: Get
+- Route: /api/projects/myprojects/page=<num>
+
+*** Get projects working
+- Method: Get
+- Route: /api/projects/projects/page=<num>
+
+*** Get project by id
+- Method: Get
+- Route: /api/projects/id=<id>
