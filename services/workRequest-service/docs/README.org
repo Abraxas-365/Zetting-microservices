@@ -1,0 +1,119 @@
+* Workrequest service
+
+** Models
+
+- Workrequest
+#+begin_src go
+type WorkRequest struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker" json:"worker,omitemptyo"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+	Status  Status    `bson:"status" json:"status,omitempty"`
+	Created time.Time `bson:"created_at" json:"created_at,omitempty"`
+	Updated time.Time `bson:"updated_at" json:"updated_at,omitempty"`
+}
+
+type LookUpWorkRequest struct {
+	ID      uuid.UUID       `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   user.User       `bson:"owner" json:"owner,omitempty"`
+	Worker  user.User       `bson:"worker" json:"worker,omitemptyo"`
+	Project project.Project `bson:"project" json:"project,omitempty"`
+	Status  Status          `bson:"status" json:"status,omitempty"`
+	Created time.Time       `bson:"created_at" json:"created_at,omitempty"`
+	Updated time.Time       `bson:"updated_at" json:"updated_at,omitempty"`
+}
+#+end_src
+
+- User
+#+begin_src go
+type User struct {
+	ID    uuid.UUID `bson:"_id" json:"id,omitempty"`
+	Name  string    `bson:"name" json:"name,omitempty"`
+	Image string    `bson:"perfil_image" json:"perfil_image,omitempty"`
+}
+#+end_src
+
+- Project
+  #+begin_src go
+type Project struct {
+	ID    uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Name  string    `bson:"name" json:"name,omitempty"`
+	Image string    `bson:"image" json:"image,omitempty"`
+}
+  #+end_src
+
+
+
+**  Rest handlers
+
+*** Create WorkRequest
+- Method: Post
+- Route: /api/work-request/new
+- Params:
+  #+begin_src go
+type WorkRequest struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker" json:"worker,omitemptyo"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+	Status  Status    `bson:"status" json:"status,omitempty"`
+	Created time.Time `bson:"created_at" json:"created_at,omitempty"`
+	Updated time.Time `bson:"updated_at" json:"updated_at,omitempty"`
+}
+  #+end_src
+
+
+
+*** Get All WorkRequest of a Project
+- Method: Get
+- Route: /api/work-request/project_id=<project_id>/status=<Status>/page=<page>/number=<number of results>
+
+*** Get All WorkRequest of a Project
+- Method: Get
+- Route: /api/work-request/status=<Status>/page=<page>/number=<number of results>
+
+*** Answer WorkRequest
+- Method: Post
+- Route: /api/work-request/answer
+  #+begin_src go
+ID     string        `json:"id,omitemptyo"`
+Status models.Status `json:"status,omitempty"`
+  #+end_src
+
+** Events
+
+*** WorkRequest Created
+- Route: new
+- Event:
+  #+begin_src go
+type WorkrequestCreated struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker" json:"worker,omitemptyo"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+	Status  string    `bson:"status" json:"status,omitempty"`
+}
+  #+end_src
+*** WorkRequest Accepted
+- Route: accepted
+- Event:
+  #+begin_src go
+type WorkrequestAccepted struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker" json:"worker,omitemptyo"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+}
+  #+end_src
+*** WorkRequest Denied
+- Route: denied
+- Event:
+  #+begin_src go
+type WorkrequestDenied struct {
+	ID      uuid.UUID `bson:"_id,omitempty" json:"id,omitempty"`
+	Owner   uuid.UUID `bson:"owner" json:"owner,omitempty"`
+	Worker  uuid.UUID `bson:"worker" json:"worker,omitemptyo"`
+	Project uuid.UUID `bson:"project" json:"project,omitempty"`
+}
+  #+end_src
