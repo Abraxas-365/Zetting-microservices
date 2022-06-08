@@ -9,6 +9,8 @@ import (
 
 func (h *userHandler) UpdateUser(c *fiber.Ctx) error {
 	updatedUser := new(models.User)
+	//TODO Change the parameters of this handler
+
 	if err := c.BodyParser(&updatedUser); err != nil {
 		return fiber.ErrBadRequest
 	}

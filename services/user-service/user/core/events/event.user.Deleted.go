@@ -3,8 +3,7 @@ package events
 import "github.com/google/uuid"
 
 type UserDeleted struct {
-	ID          uuid.UUID `bson:"_id,omitempty" json:"id"`
-	PerfilImage string    `bson:"perfil_image" json:"perfil_image,omitempty"`
+	ID uuid.UUID `bson:"_id,omitempty" json:"id"`
 }
 
 func (e UserDeleted) Name() string {

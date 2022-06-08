@@ -7,6 +7,7 @@ import (
 )
 
 func (a *userApplication) UpdateUser(updated models.User, userId uuid.UUID) error {
+	//TODO
 	return nil
 
 }
